@@ -1,32 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Binary Conversion Game</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Binary Conversion Game</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div id="app">
-    <h1>Binary Conversion Game</h1>
-    <div id="game-area">
-      <div id="task">
-        <h2>Convert Decimal: <span id="decimal-number">0</span></h2>
-      </div>
-      <div id="binary-slots">
-        <!-- Binary slots will be dynamically populated by JavaScript -->
-      </div>
-      <div id="buttons">
-        <button id="check-answer">Check Answer</button>
-        <button id="next-task">Next Task</button>
-      </div>
+    <div id="app">
+        <h1>Binary Conversion Game</h1>
+        <div id="scoreboard">
+            <div id="score">
+                <h3>Score: <span id="score-value">0</span></h3>
+            </div>
+            <div id="decimal-number">
+                <h2>Decimal: <span id="decimal-value">0</span></h2>
+            </div>
+            <div id="binary-slots">
+                <div id="slot-container">
+                    <!-- Binary slots will be rendered here by JS -->
+                </div>
+            </div>
+            <div id="feedback"></div>
+            <div id="timer-bar-container">
+                <progress id="timer-bar" value="100" max="100"></progress>
+            </div>
+            <button id="check-answer-button">Check Answer</button>
+            <button id="next-task-button">Next Task</button>
+        </div>
+
+        <div id="game-over-screen">
+            <h2>Game Over</h2>
+            <p>Your final score is: <span id="final-score">0</span></p>
+            <button onclick="restartGame()">Restart</button>
+        </div>
     </div>
-    <div id="scoreboard">
-      <p>Score: <span id="score">0</span></p>
-      <p>Time: <span id="timer">20</span>s</p>
-      <p id="feedback"></p>
-    </div>
-  </div>
-  <script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
