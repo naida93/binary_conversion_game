@@ -1,36 +1,95 @@
 body {
     font-family: 'Fredoka One', sans-serif;
-    background-color: #f5f5f5;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-}
-
-#app {
-    background: rgba(255, 255, 255, 0.8); /* Semi-transparent background for contrast */
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-    padding: 40px; /* Increased padding for bigger body */
+    background: #f0f4f8;
+    color: #333;
     text-align: center;
-    width: 500px; /* Adjust width */
+    margin: 0;
+    padding: 0;
 }
 
 h1 {
-    font-size: 32px;
+    color: #4caf50;
 }
 
-#scoreboard {
+#game-container {
+    margin: 20px auto;
+    width: 80%;
+    max-width: 600px;
+    background: #fff;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    display: flex; /* Enables flexbox layout */
+    flex-direction: column; /* Stack elements vertically */
+    align-items: center; /* Centers all child elements horizontally */
+}
+
+#elevator-shaft {
+    position: relative;
+    width: 200px;
+    height: 350px;
+    border: 2px solid #333;
+    margin: 20px auto;
+    background: #e3e6ea;
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+/* Floors */
+#floors {
+    position: relative;
+    height: 100%;
+}
+
+.floor {
+    height: 6.25%; /* 6.25% to fit 16 floors in total */
+    border-top: 1px solid #bbb;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+    font-weight: bold;
+    color: #555;
+}
+
+/* Elevator (now using relative positioning) */
+#elevator {
+    width: 60%;
+    height: 6.25%; /* Each floor will now occupy 6.25% of the total height */
+    background: #4caf50;
+    border: 2px solid #388e3c;
+    position: relative; /* Elevator position relative to the shaft */
+    bottom: 0; /* Start at the bottom (ground floor) */
+    left: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    color: white;
+    font-weight: bold;
+    transition: bottom 1s ease-in-out; /* Smooth transition to move elevator up/down */
+    border-radius: 10px;
+}
+
+/* Control Panel Container */
+#control-panel-container {
+    background-color: #f0f4f8; /* Light background color */
+    border: 2px solid #ccc; /* Add border for clear separation */
+    padding: 20px;
+    border-radius: 10px; /* Round corners for a smoother look */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow for the container */
     margin-top: 20px;
+    width: 80%;
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Ensures control panel content is centered */
 }
 
-#score h3 {
-    font-size: 24px;
-}
-
-#decimal-number h2 {
-    font-size: 24px;
+#lift-control {
+    text-align: center;
 }
 
 #binary-slots {
@@ -45,8 +104,8 @@ h1 {
 }
 
 .slot {
-    width: 80px;
-    height: 80px;
+    width: 60px;
+    height: 60px;
     background: #f0f0f0;
     border-radius: 50%;
     display: flex;
@@ -80,14 +139,17 @@ h1 {
     box-shadow: 0 0 20px rgba(255, 165, 35, 0.8); /* More intense glow */
 }
 
-/* Active feedback message */
+/* When the binary slot is active (1) */
+.binary-button.active {
+    background: #ffeb3b; /* Light bulb on state (yellow) */
+    box-shadow: 0 4px 8px rgba(255, 235, 59, 0.7); /* Glowing effect */
+}
+
+/* Feedback */
 #feedback {
     margin-top: 20px;
     font-size: 18px;
     font-weight: bold;
-    transition: opacity 0.5s ease, transform 0.5s ease;
-    opacity: 0;
-    transform: translateY(-20px);
 }
 
 #feedback.correct {
@@ -96,11 +158,6 @@ h1 {
 
 #feedback.incorrect {
     color: #f44336;
-}
-
-#feedback.show {
-    opacity: 1;
-    transform: translateY(0);
 }
 
 button {
@@ -125,58 +182,18 @@ button:active {
     background-color: #ff5733;
 }
 
-#timer-bar-container {
+/* Score */
+#score-container {
+    font-size: 18px;
+    font-weight: bold;
     margin-top: 10px;
-    width: 100%;
 }
 
-progress {
-    width: 100%;
-    height: 20px;
-    appearance: none;
-    border-radius: 10px;
-    background-color: #ddd;
-}
-
-progress::-webkit-progress-bar {
-    background-color: #f3f3f3;
-}
-
-progress::-webkit-progress-value {
-    background-color: #4caf50;
-}
-
-progress::-moz-progress-bar {
-    background-color: #4caf50;
-}
-
+/* Game Over Screen */
 #game-over-screen {
     display: none;
-    text-align: center;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
 }
 
 #game-over-screen.show {
     display: block;
-}
-
-#game-over-screen h2 {
-    font-size: 36px;
-    color: #f44336;
-}
-
-#game-over-screen button {
-    background-color: #4caf50;
-    border: none;
-    padding: 10px 20px;
-    font-size: 20px;
-    color: white;
-    cursor: pointer;
-}
-
-#game-over-screen button:hover {
-    background-color: #45a049;
 }

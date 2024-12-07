@@ -1,129 +1,105 @@
 let binarySlots = [0, 0, 0, 0];
-let decimalNumber = Math.floor(Math.random() * 16);
+let decimalNumber = Math.floor(Math.random() * 16); 
 let targetBinary = decimalNumber.toString(2).padStart(4, '0');
 let score = 0;
-let timeLimit = 20;
-let timer;
-let feedbackTimeout;
-let gameOver = false;
 
 
 const decimalValueEl = document.getElementById('decimal-value');
-const timerBar = document.getElementById('timer-bar');
-const checkButton = document.getElementById('check-answer-button');
-const nextButton = document.getElementById('next-task-button');
+const elevatorEl = document.getElementById('elevator');
+const floorsEl = document.getElementById('floors');
+const binaryInputEl = document.getElementById('binary-input');
 const feedbackEl = document.getElementById('feedback');
 const scoreEl = document.getElementById('score-value');
-const gameOverScreen = document.getElementById('game-over-screen');
-const finalScoreEl = document.getElementById('final-score');
+const nextButton = document.getElementById('next-task-button');
+const checkAnswerButton = document.getElementById('check-answer-button');
 
 
 function startGame() {
     decimalValueEl.textContent = decimalNumber;
-    renderBinarySlots();
+    renderFloors();
+    renderBinaryInput();
+    updateElevatorPosition(); 
     updateScore();
-    startTimer();
 }
 
 
-function renderBinarySlots() {
+function renderFloors() {
+    floorsEl.innerHTML = ''; 
+    for (let i = 15; i >= 0; i--) {
+        const floorDiv = document.createElement('div');
+        floorDiv.classList.add('floor');
+        floorDiv.textContent = `Floor ${i}`;
+        floorsEl.appendChild(floorDiv);
+    }
+}
+
+
+function renderBinaryInput() {
     const slotContainer = document.getElementById('slot-container');
-    slotContainer.innerHTML = ''; // Clear previous slots
+    slotContainer.innerHTML = ''; 
+
     binarySlots.forEach((slot, index) => {
         const slotDiv = document.createElement('div');
         slotDiv.classList.add('slot');
-        if (slot === 1) slotDiv.classList.add('active');
+        if (slot === 1) {
+            slotDiv.classList.add('active'); 
+        } else {
+            slotDiv.classList.add('inactive'); 
+        }
+        
         slotDiv.textContent = slot;
+        
         slotDiv.onclick = () => toggleBinarySlot(index);
+
         slotContainer.appendChild(slotDiv);
     });
 }
 
+function updateElevatorPosition() {
+    const totalFloors = 16;  
+    const floorHeight = 100 / totalFloors; 
+
+    // Move the elevator based on the current decimal number
+    // The elevator's position is relative to the ground floor, and its position is calculated
+    // based on the floor height and the current decimalNumber.
+    elevatorEl.style.bottom = `${decimalNumber * floorHeight}%`; // Elevator position relative to the bottom of the shaft
+}
 
 function toggleBinarySlot(index) {
-    if (gameOver) return;
     binarySlots[index] = binarySlots[index] === 0 ? 1 : 0;
-    renderBinarySlots();
+    renderBinaryInput(); 
 }
 
-
-function startTimer() {
-    clearInterval(timer);
-    let timeLeft = timeLimit;
-    timerBar.value = 100;
-
-    timer = setInterval(() => {
-        timeLeft -= 1;
-        timerBar.value = (timeLeft / timeLimit) * 100;
-
-        if (timeLeft <= 0) {
-            clearInterval(timer);
-            showFeedback("Time's up!", false);
-            gameOver = true;
-            showGameOverScreen();
-        }
-    }, 1000);
-}
-
-
-function checkAnswer() {
-    if (gameOver) return;
-
+checkAnswerButton.onclick = function () {
     const playerBinary = binarySlots.join('');
-    const targetBinary = decimalNumber.toString(2).padStart(4, '0');
-
     if (playerBinary === targetBinary) {
         score += 1;
-        showFeedback('Correct!', true);
+        decimalNumber = (decimalNumber + 1) % 16; 
+        targetBinary = decimalNumber.toString(2).padStart(4, '0');
+        updateElevatorPosition(); 
+        showFeedback('Correct! Elevator moved!', true);
     } else {
-        score -= 1;
-        showFeedback('Incorrect. Try again!', false);
+        showFeedback('Incorrect! Try again.', false);
     }
-
     updateScore();
-}
-
-
-function showFeedback(message, isCorrect) {
-    clearTimeout(feedbackTimeout);
-    feedbackEl.textContent = message;
-    feedbackEl.classList.add(isCorrect ? 'correct' : 'incorrect');
-    feedbackEl.classList.add('show');
-
-    feedbackTimeout = setTimeout(() => {
-        feedbackEl.classList.remove('show');
-    }, 2000);
-}
-
-
-function updateScore() {
-    scoreEl.textContent = score;
-}
-function showGameOverScreen() {
-    finalScoreEl.textContent = score;
-    gameOverScreen.classList.add('show');
-}
-
-
-function restartGame() {
-    gameOver = false;
-    binarySlots = [0, 0, 0, 0];
-    decimalNumber = Math.floor(Math.random() * 16);
-    targetBinary = decimalNumber.toString(2).padStart(4, '0');
-    startGame();
-    gameOverScreen.classList.remove('show');
-    startTimer();
-}
-
-
-nextButton.onclick = function () {
-    if (gameOver) return;
-    decimalNumber = Math.floor(Math.random() * 16);
-    targetBinary = decimalNumber.toString(2).padStart(4, '0');
-    binarySlots = [0, 0, 0, 0];
-    startGame();
 };
 
-checkButton.onclick = checkAnswer;
+function showFeedback(message, isCorrect) {
+    feedbackEl.textContent = message;
+    feedbackEl.classList.toggle('correct', isCorrect);
+    feedbackEl.classList.toggle('incorrect', !isCorrect);
+}
+
+function updateScore() {
+    scoreEl.textContent = `Score: ${score}`;
+}
+
+nextButton.onclick = function () {
+    decimalNumber = Math.floor(Math.random() * 16); 
+    targetBinary = decimalNumber.toString(2).padStart(4, '0');
+    binarySlots = [0, 0, 0, 0]; 
+    startGame(); 
+    updateElevatorPosition();
+};
 
 startGame();
