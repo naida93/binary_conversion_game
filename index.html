@@ -11,10 +11,13 @@
     <div id="game-container">
         <h1>Binary Elevator Rescue</h1>
         <p id="story">
-            Der Aufzug ist auf Etage <span id="decimal-value"></span>. Gib den richtigen Binärcode ein, um ihn zu
+            Der Aufzug ist auf Etage <span id="decimal-value"></span> stecken geblieben. Gib den richtigen Binärcode ein, um ihn zu
             bewegen!</p>
-        <p>
+        <p id="score-container">
+            Score: <span id="score-value">0</span>
         </p>
+        <p id="feedback"></p>
+
 
         <div id="elevator-shaft">
             <div id="floors"></div>
@@ -23,7 +26,7 @@
 
         <div id="control-panel-container">
             <div id="lift-control">
-                <h2>Aufzugbedientafel</h2>
+                <h2 style="font-size: 20px;">Aufzugbedientafel</h2>
                 <div id="binary-slots">
                     <div id="slot-container">
                         <!-- Binary slots will be dynamically rendered here -->
@@ -32,14 +35,6 @@
                 <button id="check-answer-button">Antwort überprüfen</button>
                 <button id="next-task-button">Weiter</button>
             </div>
-        </div>
-
-        <!-- Feedback -->
-        <div id="feedback"></div>
-
-        <!-- Score -->
-        <div id="score-container">
-            Score: <span id="score-value">0</span>
         </div>
 
         <!-- Game Over Screen -->

@@ -57,12 +57,8 @@ function renderBinaryInput() {
 
 function updateElevatorPosition() {
     const totalFloors = 16;  
-    const floorHeight = 100 / totalFloors; 
-
-    // Move the elevator based on the current decimal number
-    // The elevator's position is relative to the ground floor, and its position is calculated
-    // based on the floor height and the current decimalNumber.
-    elevatorEl.style.bottom = `${decimalNumber * floorHeight}%`; // Elevator position relative to the bottom of the shaft
+    const floorHeight = 100 / totalFloors;
+    elevatorEl.style.bottom = `${decimalNumber * floorHeight}%`;
 }
 
 function toggleBinarySlot(index) {
@@ -77,9 +73,9 @@ checkAnswerButton.onclick = function () {
         decimalNumber = (decimalNumber + 1) % 16; 
         targetBinary = decimalNumber.toString(2).padStart(4, '0');
         updateElevatorPosition(); 
-        showFeedback('Correct! Elevator moved!', true);
+        showFeedback('Richtig! Der Aufzug hat sich bewegt!', true);
     } else {
-        showFeedback('Incorrect! Try again.', false);
+        showFeedback('Falsch! Versuch es noch einmal.', false);
     }
     updateScore();
 };
@@ -91,7 +87,7 @@ function showFeedback(message, isCorrect) {
 }
 
 function updateScore() {
-    scoreEl.textContent = `Score: ${score}`;
+    scoreEl.textContent = `${score}`;
 }
 
 nextButton.onclick = function () {

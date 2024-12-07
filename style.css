@@ -25,9 +25,23 @@ h1 {
     align-items: center; /* Centers all child elements horizontally */
 }
 
+#story {
+    font-size: 20px; /* Larger text for the story */
+    line-height: 1.2; /* Optional: Improve readability */
+}
+
+#decimal-value {
+    font-size: 20px; /* Make the decimal value slightly larger */
+    font-weight: bold; /* Make it bold */
+    color: #4caf50; /* Green color to match the theme */
+    background-color: #f4f1de; /* Optional: add a background color for emphasis */
+    padding: 2px 5px; /* Add some padding around the value */
+    border-radius: 5px; /* Optional: round the edges of the background */
+}
+
 #elevator-shaft {
     position: relative;
-    width: 200px;
+    width: 300px;
     height: 350px;
     border: 2px solid #333;
     margin: 20px auto;
@@ -56,13 +70,13 @@ h1 {
 
 /* Elevator (now using relative positioning) */
 #elevator {
-    width: 60%;
+    width: 80%;
     height: 6.25%; /* Each floor will now occupy 6.25% of the total height */
     background: #4caf50;
     border: 2px solid #388e3c;
     position: relative; /* Elevator position relative to the shaft */
     bottom: 0; /* Start at the bottom (ground floor) */
-    left: 20%;
+    left: 10%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -77,11 +91,11 @@ h1 {
 #control-panel-container {
     background-color: #f0f4f8; /* Light background color */
     border: 2px solid #ccc; /* Add border for clear separation */
-    padding: 20px;
+    padding: 12px;
     border-radius: 10px; /* Round corners for a smoother look */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow for the container */
     margin-top: 20px;
-    width: 80%;
+    width: 70%;
     max-width: 600px;
     display: flex;
     flex-direction: column;
@@ -95,7 +109,8 @@ h1 {
 #binary-slots {
     display: flex;
     justify-content: center;
-    margin-top: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 #slot-container {
@@ -147,7 +162,7 @@ h1 {
 
 /* Feedback */
 #feedback {
-    margin-top: 20px;
+    margin-top: 15px;
     font-size: 18px;
     font-weight: bold;
 }
@@ -184,7 +199,7 @@ button:active {
 
 /* Score */
 #score-container {
-    font-size: 18px;
+    font-size: 21px;
     font-weight: bold;
     margin-top: 10px;
 }
