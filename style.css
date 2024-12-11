@@ -19,12 +19,89 @@ h1 {
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 20px;
-    display: grid;
-    grid-template-rows: repeat(3, auto);
-    grid-template-columns: 3fr 1fr 3fr;
+    display: flex;
+    flex-direction: column;
     gap: 10px;
     align-items: center; /* Centers all child elements horizontally */
 }
+
+#intro-content-container {
+    display: grid;
+    width: 80%;
+    grid-template-rows: auto auto auto;
+    grid-template-columns: 3fr 1fr 3fr;
+    align-items: center; /* Centers all child elements horizontally */
+}
+
+.part-container {
+    padding: 50px;
+    background-color: #e0e0e0;
+    border-radius: 8px;
+}
+
+#part-2, #part-3, #part-4 {
+    display: none;
+}
+
+#part-1, #arrow-1 {
+      display: block;
+}
+
+#part-1 {
+    display: grid;
+    grid-template-rows: auto 1fr; /* Two rows: text in the first row, grid in the second */
+    grid-template-columns: 1fr;  /* Single column layout in the first row */
+    gap: 10px; /* Add some spacing between rows */
+}
+
+.grid-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Two equal columns */
+    gap: 10px; /* Add spacing between the binary slot and the state display */
+    align-items: center; /* Center the content vertically */
+}
+
+#additional-slot-container {
+    justify-self: center; /* Center the binary slot in its column */
+}
+
+#state-display {
+    font-size: 1.2em;
+    text-align: center; /* Center the state text in its column */
+}
+
+
+#part-3 {
+      grid-column: 3; /* Third column */
+      grid-row: 3;    /* Third row */
+    }
+
+#arrow-3 {
+      grid-column: 2; /* Second column */
+      grid-row: 3;    /* Third row */
+    }
+
+#part-4 {
+      grid-column: 1; /* First column */
+      grid-row: 3;    /* Third row */
+    }
+
+.arrow {
+    font-size: 24px;
+    background-color: #f5a623;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    display: none;
+
+    width: 50px;
+    height: 50px;
+    justify-self: center; /* Center horizontally */
+    align-self: center;
+}
+
 
 #game-container {
     margin: 20px auto;
