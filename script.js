@@ -3,7 +3,6 @@ let decimalNumber = Math.floor(Math.random() * 16);
 let targetBinary = decimalNumber.toString(2).padStart(4, '0');
 let score = 0;
 
-
 const decimalValueEl = document.getElementById('decimal-value');
 const elevatorEl = document.getElementById('elevator');
 const floorsEl = document.getElementById('floors');
@@ -14,38 +13,141 @@ const nextButton = document.getElementById('next-task-button');
 const checkAnswerButton = document.getElementById('check-answer-button');
 
 
-// JavaScript to handle progressive reveal
-    document.getElementById('arrow-1').addEventListener('click', () => {
-      // Show part-2 and arrow-2
-      document.getElementById('part-2').style.display = 'block';
-      document.getElementById('arrow-2').style.display = 'block';
+// Handling progressive reveal
+    document.getElementById('intro-arrow-1').addEventListener('click', () => {
+        document.getElementById('intro-part-2').style.display = 'block';
+        document.getElementById('intro-arrow-2').style.display = 'block';
     });
 
-    document.getElementById('arrow-2').addEventListener('click', () => {
-      // Show part-3 and arrow-3
-      document.getElementById('part-3').style.display = 'block';
-      document.getElementById('arrow-3').style.display = 'block';
+    document.getElementById('intro-arrow-2').addEventListener('click', () => {
+        document.getElementById('intro-part-3').style.display = 'block';
+        document.getElementById('intro-arrow-3').style.display = 'block';
     });
 
-    document.getElementById('arrow-3').addEventListener('click', () => {
-      // Show part-4
-      document.getElementById('part-4').style.display = 'block';
+    document.getElementById('intro-arrow-3').addEventListener('click', () => {
+        document.getElementById('intro-part-4').style.display = 'block';
     });
 
 
 function startGame() {
     decimalValueEl.textContent = decimalNumber;
     renderFloors();
-    /*renderBinaryInput(); */
     renderBinaryInput('slot-container', 4, true);
-    renderBinaryInput('additional-slot-container', 1, false);
-    updateElevatorPosition(); 
+    // renderBinaryInput('part-4-slot-container', 3, false);
+
+    updateElevatorPosition();
     updateScore();
 }
 
 
+function generateRandomNumberInRange(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+
+function generateRandomNumberForSection(sectionId, range) {
+    const { min, max } = range;
+    const randomNumber = generateRandomNumberInRange(min, max);
+    const placeholder = document.querySelector(`#${sectionId}  #${sectionId}-placeholder`);
+
+    if (placeholder) {
+        placeholder.innerText = randomNumber;  // Replace the inner text of the placeholder span
+        return randomNumber;  // Return the generated number
+    } else {
+        console.error(`Placeholder not found in section: ${sectionId}`);
+    }
+}
+
+
+function checkUserInput(userNumber, targetNumber, feedbackElement) {
+    if (userNumber === targetNumber) {
+        feedbackElement.textContent = 'Correct! Well done!';
+        feedbackElement.style.color = 'green';
+    } else {
+        feedbackElement.textContent = `Incorrect. The correct answer was ${targetNumber}. Try again!`;
+        feedbackElement.style.color = 'red';
+    }
+}
+
+
+function initPart1() {
+    const part1Target = generateRandomNumberForSection('part-1-prompt', { min: 1, max: 999 });
+
+    const checkButton = document.getElementById('part-1-check-answer');
+    const feedbackElement = document.getElementById('part-1-feedback');
+    const digitPickers = document.querySelectorAll('#part-1-dropdowns .digit-picker');
+    const multipliers = [100, 10, 1];
+
+    // Event listener for the 'Check Answer' button
+    checkButton.onclick = () => {
+        const userDigits = Array.from(digitPickers).map(picker => parseInt(picker.value));
+        const userNumber = userDigits.reduce((sum, digit, index) => sum + digit * multipliers[index], 0);
+        checkUserInput(userNumber, part1Target, feedbackElement);
+    };
+}
+
+
+function initPart2() {
+    const part2Target = generateRandomNumberForSection('part-2-prompt', { min: 1, max: 63 });
+
+    const checkButton = document.getElementById('part-2-check-answer');
+    const feedbackElement = document.getElementById('part-2-feedback');
+    const digitPickers = document.querySelectorAll('#part-2-dropdowns .digit-picker');
+
+    // Event listener for the 'Check Answer' button
+    checkButton.onclick = () => {
+        const userDigits = Array.from(digitPickers).map(picker => parseInt(picker.value));
+        const userNumber = userDigits.reduce((sum, digit) => sum + digit, 0);
+        checkUserInput(userNumber, part2Target, feedbackElement);
+    };
+}
+
+
+function initPart3() {
+
+}
+
+
+function initPart4() {
+    const part4Target = generateRandomNumberForSection('part-4-prompt', { min: 1, max: 15 });
+    const checkButton = document.getElementById('part-4-check-answer');
+    const feedbackElement = document.getElementById('part-4-feedback');
+
+    let playerBinarySlots = Array(4).fill(0); // To track user input
+
+    renderBinaryInput('part-4-slot-container', 4, {
+        showDigits: false,
+        slotLabels: ['2^3', '2^2', '2^1', '2^0'],
+        onSlotClick: (index, value, allSlots) => {
+            playerBinarySlots = allSlots; // Update binary slots as user toggles them
+        }
+    });
+
+    // Event listener for the 'Check Answer' button
+    checkButton.onclick = () => {
+        const playerBinary = playerBinarySlots.join('');
+        const playerDecimal = parseInt(playerBinary, 2);
+
+        checkUserInput(playerDecimal, part4Target, feedbackElement);
+    };
+}
+
+
+function initGame() {
+    initPart1();
+    initPart2();
+    initPart3();
+    initPart4();
+}
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    initGame();
+});
+
+
 function renderFloors() {
-    floorsEl.innerHTML = ''; 
+    floorsEl.innerHTML = '';
     for (let i = 15; i >= 0; i--) {
         const floorDiv = document.createElement('div');
         floorDiv.classList.add('floor');
@@ -54,58 +156,30 @@ function renderFloors() {
     }
 }
 
-
-/*function renderBinaryInput() {
-    const slotContainer = document.getElementById('slot-container');
-    slotContainer.innerHTML = ''; 
-
-    binarySlots.forEach((slot, index) => {
-        const slotDiv = document.createElement('div');
-        slotDiv.classList.add('slot');
-        if (slot === 1) {
-            slotDiv.classList.add('active'); 
-        } else {
-            slotDiv.classList.add('inactive'); 
-        }
-        
-        slotDiv.textContent = slot;
-        
-        slotDiv.onclick = () => toggleBinarySlot(index);
-
-        slotContainer.appendChild(slotDiv);
-    });
-}*/
-
-function renderBinaryInput(containerId, numberOfSlots, showDigits = true) {
+/*function renderBinaryInput(containerId, numberOfSlots, showDigits = true) {
     const slotContainer = document.getElementById(containerId);
-    slotContainer.innerHTML = ''; // Clear previous slots
+    slotContainer.innerHTML = '';
 
-    // Create an array to hold the state of each binary slot
-    const binarySlots = Array(numberOfSlots).fill(0); // Default all slots to 0 (inactive)
+    const binarySlots = Array(numberOfSlots).fill(0);
 
     binarySlots.forEach((slot, index) => {
         const slotDiv = document.createElement('div');
         slotDiv.classList.add('slot');
-
-        // Apply active or inactive class based on initial state
         if (slot === 1) {
             slotDiv.classList.add('active');
         } else {
             slotDiv.classList.add('inactive');
         }
 
-        // Conditionally set the text content based on showDigits
         if (showDigits) {
             slotDiv.textContent = slot;
         } else {
-            slotDiv.textContent = ''; // Hide the digits if showDigits is false
+            slotDiv.textContent = '';
         }
 
-        // Add onclick event to toggle the binary slot state
         slotDiv.onclick = () => {
-            binarySlots[index] = 1 - binarySlots[index]; // Toggle between 0 and 1
+            binarySlots[index] = 1 - binarySlots[index];
 
-            // Update class based on the state
             if (binarySlots[index] === 1) {
                 slotDiv.classList.remove('inactive');
                 slotDiv.classList.add('active');
@@ -114,62 +188,105 @@ function renderBinaryInput(containerId, numberOfSlots, showDigits = true) {
                 slotDiv.classList.add('inactive');
             }
 
-            // Update text content only if showDigits is true
             if (showDigits) {
                 slotDiv.textContent = binarySlots[index];
             }
 
-            // Dynamically update the state display for #additional-slot-container
             if (containerId === 'additional-slot-container') {
                 const stateDisplay = document.getElementById('state-display');
                 stateDisplay.textContent = binarySlots[index] === 1 ? 'Ein' : 'Aus';
             }
         };
 
-        // Append the slot to the container
+        slotContainer.appendChild(slotDiv);
+    });
+}*/
+
+
+function renderBinaryInput(containerId, numberOfSlots, options = {}) {
+    const {
+        showDigits = true,
+        slotLabels = [], // Optional array of labels for each slot
+        onSlotClick = () => {}, // Callback function for slot click events
+        stateDisplayId = null, // Optional ID for displaying state text
+        stateDisplayLabels = { 1: 'Active', 0: 'Inactive' } // Custom state labels
+    } = options;
+
+    const slotContainer = document.getElementById(containerId);
+    slotContainer.innerHTML = '';
+
+    const binarySlots = Array(numberOfSlots).fill(0);
+
+    // Helper function to create and configure individual slot
+    const createSlot = (slotValue, index) => {
+        const slotDiv = document.createElement('div');
+        slotDiv.classList.add('slot', slotValue === 1 ? 'active' : 'inactive');
+
+        // Add labels or digits to the slot
+        if (slotLabels[index]) {
+            slotDiv.textContent = slotLabels[index];
+        } else if (showDigits) {
+            slotDiv.textContent = slotValue;
+        }
+
+        // Slot click event handler
+        slotDiv.onclick = () => {
+            binarySlots[index] = 1 - binarySlots[index];
+            updateSlotAppearance(slotDiv, binarySlots[index], showDigits, slotLabels[index]);
+
+            // Update optional state display
+            if (stateDisplayId) {
+                const stateDisplay = document.getElementById(stateDisplayId);
+                stateDisplay.textContent = stateDisplayLabels[binarySlots[index]];
+            }
+
+            // Trigger custom onSlotClick callback
+            onSlotClick(index, binarySlots[index], binarySlots);
+        };
+
+        return slotDiv;
+    };
+
+    // Helper function to update the appearance of a slot
+    const updateSlotAppearance = (slotDiv, slotValue, showDigits, label) => {
+        slotDiv.classList.toggle('active', slotValue === 1);
+        slotDiv.classList.toggle('inactive', slotValue === 0);
+        slotDiv.textContent = label || (showDigits ? slotValue : '');
+    };
+
+    // Render each slot
+    binarySlots.forEach((slot, index) => {
+        const slotDiv = createSlot(slot, index);
         slotContainer.appendChild(slotDiv);
     });
 }
 
 
 
-
 function updateElevatorPosition() {
-    const totalFloors = 16;  
+    const totalFloors = 16;
     const floorHeight = 100 / totalFloors;
     elevatorEl.style.bottom = `${decimalNumber * floorHeight}%`;
 }
 
-function toggleBinarySlot(index) {
-    binarySlots[index] = binarySlots[index] === 0 ? 1 : 0;
-    renderBinaryInput(); 
+function showFeedback(message, isCorrect) {
+    feedbackEl.textContent = message;
+    feedbackEl.classList.toggle('correct', isCorrect);
+    feedbackEl.classList.toggle('incorrect', !isCorrect);
 }
 
-/*checkAnswerButton.onclick = function () {
-    const playerBinary = binarySlots.join('');
-    if (playerBinary === targetBinary) {
-        score += 1;
-        decimalNumber = (decimalNumber + 1) % 16; 
-        targetBinary = decimalNumber.toString(2).padStart(4, '0');
-        updateElevatorPosition(); 
-        showFeedback('Richtig! Der Aufzug hat sich bewegt!', true);
-    } else {
-        showFeedback('Falsch! Versuch es noch einmal.', false);
-    }
-    updateScore();
-};*/
+function updateScore() {
+    scoreEl.textContent = `${score}`;
+}
 
 checkAnswerButton.onclick = function () {
-    // Select only the binary slots in the #slot-container
     const slotContainer = document.getElementById('slot-container');
     const slotDivs = slotContainer.querySelectorAll('.slot');
 
-    // Read the player's binary input
     const playerBinary = Array.from(slotDivs)
         .map((slotDiv) => slotDiv.textContent)
         .join('');
 
-    // Check if the player's binary matches the target
     if (playerBinary === targetBinary) {
         score += 1;
         decimalNumber = (decimalNumber + 1) % 16;
@@ -182,22 +299,11 @@ checkAnswerButton.onclick = function () {
     updateScore();
 };
 
-
-function showFeedback(message, isCorrect) {
-    feedbackEl.textContent = message;
-    feedbackEl.classList.toggle('correct', isCorrect);
-    feedbackEl.classList.toggle('incorrect', !isCorrect);
-}
-
-function updateScore() {
-    scoreEl.textContent = `${score}`;
-}
-
 nextButton.onclick = function () {
-    decimalNumber = Math.floor(Math.random() * 16); 
+    decimalNumber = Math.floor(Math.random() * 16);
     targetBinary = decimalNumber.toString(2).padStart(4, '0');
-    binarySlots = [0, 0, 0, 0]; 
-    startGame(); 
+    binarySlots = [0, 0, 0, 0];
+    startGame();
     updateElevatorPosition();
 };
 

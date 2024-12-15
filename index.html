@@ -9,36 +9,160 @@
 </head>
 
 <body>
-    <div id="intro-container">
-        <h1>Introduction to Binary Conversion </h1>
-        <div id="intro-content-container">
+    <div id="intro-wrapper">
+        <h1 id="intro-heading"> Introduction to Binary Conversion </h1>
+        <div id="intro-content">
             <!-- First Row -->
-            <div id="part-1" class="part-container">
-                <div>Eine Glühbirne hat 2 mögliche Zustände - Ein und Aus.</div>
-                <div class="grid-row">
-                    <div id="additional-slot-container"></div>
-                    <div id="state-display">Aus</div>
+            <div id="intro-part-1" class="part-container">
+                <div id="intro-part-1-task" class="part-container-header">Zerlege die Zahl in ihre Teile!</div>
+                <div id="part-1-dropdowns">
+                    <div id="part-1-prompt">
+                        <span id="part-1-prompt-placeholder" class="target-value">XXX</span>
+                    </div>
+                    <label> = </label>
+                    <label id="label-1">100</label>
+                    <label> * </label>
+                    <select class="digit-picker">
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                    </select>
+                    <label id="label-2"> + 10</label>
+                    <label> * </label>
+                    <select class="digit-picker">
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                    </select>
+                    <label id="label-3"> + 1</label>
+                    <label> * </label>
+                    <select class="digit-picker">
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                    </select>
                 </div>
+                <button id="part-1-check-answer">Check Answer</button>
+                <div id="part-1-feedback"></div>
             </div>
-            <button id="arrow-1" class="arrow">→</button>
-            <div id="part-2" class="part-container">Container for Part 2</div>
+            <button id="intro-arrow-1" class="arrow">→</button>
+            <div id="intro-part-2" class="part-container">
+                <div id="intro-part-2-task" class="part-container-header">Baue sie Schritt für Schritt!</div>
+                <div id="part-2-dropdowns">
+                    <div id="part-2-prompt"><span id="part-2-prompt-placeholder" class="target-value">XXX</span></div>
+                    <label> = </label>
+                    <select class="digit-picker">
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="4">4</option>
+                        <option value="8">8</option>
+                        <option value="16">16</option>
+                        <option value="32">32</option>
+                    </select>
+                    <label> + </label>
+                    <select class="digit-picker">
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="4">4</option>
+                        <option value="8">8</option>
+                        <option value="16">16</option>
+                        <option value="32">32</option>
+                    </select>
+                    <label> + </label>
+                    <select class="digit-picker">
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="4">4</option>
+                        <option value="8">8</option>
+                        <option value="16">16</option>
+                        <option value="32">32</option>
+                    </select>
+                    <label> + </label>
+                    <select class="digit-picker">
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="4">4</option>
+                        <option value="8">8</option>
+                        <option value="16">16</option>
+                        <option value="32">32</option>
+                    </select>
+                    <label> + </label>
+                    <select class="digit-picker">
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="4">4</option>
+                        <option value="8">8</option>
+                        <option value="16">16</option>
+                        <option value="32">32</option>
+                    </select>
+
+                </div>
+                <button id="part-2-check-answer">Check Answer</button>
+                <div id="part-2-feedback"></div>
+            </div>
 
             <!-- Second Row -->
             <div></div>
             <div></div>
-            <button id="arrow-2" class="arrow">↓</button>
+            <button id="intro-arrow-2" class="arrow">↓</button>
 
             <!-- Third Row -->
-            <div id="part-4" class="part-container">Container for Part 4</div>
-            <button id="arrow-3" class="arrow">←</button>
-            <div id="part-3" class="part-container">Container for Part 3</div>
+            <div id="intro-part-4" class="part-container">
+                <div id="intro-part-4-task" class="part-container-header">Und jetzt mach sie binär!</div>
+                <div id="part-4-body">
+                    <div id="part-4-prompt">
+                        <span id="part-4-prompt-placeholder" class="target-value">XXX</span>
+                    </div>
+                    <label> = </label>
+                    <div id="part-4-binary-slots">
+                        <div id="part-4-slot-container" class="binary-slot-container"></div>
+                    </div>
+
+                </div>
+                <button id="part-4-check-answer">Check Answer</button>
+                <div id="part-4-feedback"></div>
+            </div>
+            <button id="intro-arrow-3" class="arrow">←</button>
+            <div id="intro-part-3" class="part-container">
+                <div>Jede Zahl hat nun zwei Zustände - ausgewählt / nicht ausgewählt.</div>
+                <!--div class="grid-row">
+                    <div id="additional-slot-container"></div>
+                    <div id="state-display">Aus</div>
+                </div-->
+            </div>
         </div>
     </div>
 
     <div id="game-container">
         <h1>Binary Elevator Rescue</h1>
         <p id="story">
-            Du willst in den <span id="decimal-value"></span>. Stock, aber der Aufzug versteht nur binäre Befehle. Gib den richtigen Binärcode ein, um ihn zu
+            Du willst in den <span id="decimal-value" class="target-value"></span>. Stock, aber der Aufzug versteht nur binäre Befehle. Gib den richtigen Binärcode ein, um ihn zu
             bewegen!</p>
         <p id="score-container">
             Score: <span id="score-value">0</span>
@@ -56,7 +180,7 @@
                 <div id="lift-control">
                     <h2 style="font-size: 20px;">Aufzugbedientafel</h2>
                     <div id="binary-slots">
-                        <div id="slot-container">
+                        <div id="slot-container" class="binary-slot-container">
                             <!-- Binary slots will be dynamically rendered here -->
                         </div>
                     </div>
