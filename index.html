@@ -29,20 +29,28 @@
             <!-- First Row -->
             <div id="intro-part-1" class="part-container">
                 <div id="intro-part-1-task" class="part-container-header">Zerlege die Zahl in ihre Teile!</div>
-                <div id="part-1-exercise">
+                <div id="part-1-exercise" class="exercise">
                     <div id="part-1-prompt">
                         <span id="part-1-prompt-placeholder" class="target-value">XXX</span>
                     </div>
-                    <label>  =  </label>
-                    <label id="label-1">100</label>
-                    <label> * </label>
-                    <div id="number-picker-container-1"></div>
-                    <label id="label-2"> + 10</label>
-                    <label> * </label>
-                    <div id="number-picker-container-2"></div>
-                    <label id="label-3"> + 1</label>
-                    <label> * </label>
-                    <div id="number-picker-container-3"></div>
+                    <label class="sign-label">  =  </label>
+                    <div id="digit-with-picker-1" class="digit-with-picker">
+                        <label id="label-1"> 100 </label>
+                        <label class="sign-label"> * </label>
+                        <div id="number-picker-container-1"></div>
+                    </div>
+                    <label class="sign-label"> + </label>
+                    <div id="digit-with-picker-2" class="digit-with-picker">
+                        <label id="label-2">10</label>
+                        <label class="sign-label"> * </label>
+                        <div id="number-picker-container-2"></div>
+                    </div>
+                    <label class="sign-label"> + </label>
+                    <div id="digit-with-picker-3" class="digit-with-picker">
+                        <label id="label-3">1</label>
+                        <label class="sign-label"> * </label>
+                        <div id="number-picker-container-3"></div>
+                    </div>
                 </div>
                 <button id="part-1-check-answer">Check Answer</button>
                 <div id="part-1-feedback"></div>
@@ -50,7 +58,7 @@
             <button id="intro-arrow-1" class="arrow">→</button>
             <div id="intro-part-2" class="part-container">
                 <div id="intro-part-2-task" class="part-container-header">Baue sie Schritt für Schritt!</div>
-                <div id="part-2-dropdowns">
+                <div id="part-2-exercise">
                     <div id="part-2-prompt"><span id="part-2-prompt-placeholder" class="target-value">XXX</span></div>
                     <label> = </label>
                     <select class="digit-picker">
