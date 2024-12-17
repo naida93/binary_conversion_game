@@ -1,7 +1,11 @@
+import { NumberPicker } from './number-picker.js';
+
 let binarySlots = [0, 0, 0, 0];
 let decimalNumber = Math.floor(Math.random() * 16); 
 let targetBinary = decimalNumber.toString(2).padStart(4, '0');
 let score = 0;
+let introDecimal = null;
+let introBinary = null;
 
 const decimalValueEl = document.getElementById('decimal-value');
 const elevatorEl = document.getElementById('elevator');
@@ -11,6 +15,7 @@ const feedbackEl = document.getElementById('feedback');
 const scoreEl = document.getElementById('score-value');
 const nextButton = document.getElementById('next-task-button');
 const checkAnswerButton = document.getElementById('check-answer-button');
+const container = document.getElementById('pickers-container');
 
 
 // Handling progressive reveal
@@ -29,33 +34,54 @@ const checkAnswerButton = document.getElementById('check-answer-button');
     });
 
 
+    document.addEventListener('DOMContentLoaded', () => {
+        const container = document.getElementById('number-picker-container-1');
+
+        const defaultPickerContainer = document.createElement('div');
+        defaultPickerContainer.classList.add('picker-wrapper');
+        container.appendChild(defaultPickerContainer);
+
+        new NumberPicker(defaultPickerContainer, { min: 0, max: 9 });
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const container = document.getElementById('number-picker-container-2');
+
+        const defaultPickerContainer = document.createElement('div');
+        defaultPickerContainer.classList.add('picker-wrapper');
+        container.appendChild(defaultPickerContainer);
+
+        new NumberPicker(defaultPickerContainer, { min: 0, max: 9 });
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const container = document.getElementById('number-picker-container-3');
+
+        const defaultPickerContainer = document.createElement('div');
+        defaultPickerContainer.classList.add('picker-wrapper');
+        container.appendChild(defaultPickerContainer);
+
+        new NumberPicker(defaultPickerContainer, { min: 0, max: 9 });
+    });
+
+
 function startGame() {
-    decimalValueEl.textContent = decimalNumber;
+    generateRandomNumberInRange(1, 256);
+    //decimalValueEl.textContent = decimalNumber;
+
     renderFloors();
     renderBinaryInput('slot-container', 4, true);
-    // renderBinaryInput('part-4-slot-container', 3, false);
-
     updateElevatorPosition();
     updateScore();
 }
 
 
 function generateRandomNumberInRange(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-}
+    introDecimal = Math.floor(Math.random() * (max - min + 1)) + min;
+    introBinary = introDecimal.toString(2).padStart(4, '0');
+    console.log(`Generated number: ${introDecimal}, Binary: ${introBinary}`);
 
-
-function generateRandomNumberForSection(sectionId, range) {
-    const { min, max } = range;
-    const randomNumber = generateRandomNumberInRange(min, max);
-    const placeholder = document.querySelector(`#${sectionId}  #${sectionId}-placeholder`);
-
-    if (placeholder) {
-        placeholder.innerText = randomNumber;  // Replace the inner text of the placeholder span
-        return randomNumber;  // Return the generated number
-    } else {
-        console.error(`Placeholder not found in section: ${sectionId}`);
-    }
+    return introDecimal
 }
 
 
@@ -71,24 +97,43 @@ function checkUserInput(userNumber, targetNumber, feedbackElement) {
 
 
 function initPart1() {
-    const part1Target = generateRandomNumberForSection('part-1-prompt', { min: 1, max: 999 });
+    const part1Prompt = document.querySelector('#part-1-prompt-placeholder');
+    part1Prompt.textContent = introDecimal;
+
+    const multipliers = [100, 10, 1];
+    const pickerContainerIds = [
+        'number-picker-container-1',
+        'number-picker-container-2',
+        'number-picker-container-3'
+    ];
+
+    // Render NumberPickers into their respective containers
+    const numberPickers = []; // Store picker instances
+    pickerContainerIds.forEach((id, index) => {
+        const container = document.getElementById(id);
+        container.innerHTML = ''; // Clear any existing content
+        const picker = new NumberPicker(container, { min: 0, max: 9 });
+        numberPickers.push(picker);
+    });
 
     const checkButton = document.getElementById('part-1-check-answer');
     const feedbackElement = document.getElementById('part-1-feedback');
-    const digitPickers = document.querySelectorAll('#part-1-dropdowns .digit-picker');
-    const multipliers = [100, 10, 1];
 
-    // Event listener for the 'Check Answer' button
     checkButton.onclick = () => {
-        const userDigits = Array.from(digitPickers).map(picker => parseInt(picker.value));
-        const userNumber = userDigits.reduce((sum, digit, index) => sum + digit * multipliers[index], 0);
-        checkUserInput(userNumber, part1Target, feedbackElement);
+        const userDigits = numberPickers.map(picker => picker.getValue()); // Get picker values
+        const userNumber = userDigits.reduce(
+            (sum, digit, index) => sum + digit * multipliers[index],
+            0
+        );
+        console.log(`User input: ${userDigits}`);
+        checkUserInput(userNumber, introDecimal, feedbackElement);
     };
 }
 
 
 function initPart2() {
-    const part2Target = generateRandomNumberForSection('part-2-prompt', { min: 1, max: 63 });
+    const part2Prompt = document.querySelector('#part-2-prompt #part-2-prompt-placeholder');
+    part2Prompt.textContent = introDecimal;
 
     const checkButton = document.getElementById('part-2-check-answer');
     const feedbackElement = document.getElementById('part-2-feedback');
@@ -98,18 +143,21 @@ function initPart2() {
     checkButton.onclick = () => {
         const userDigits = Array.from(digitPickers).map(picker => parseInt(picker.value));
         const userNumber = userDigits.reduce((sum, digit) => sum + digit, 0);
-        checkUserInput(userNumber, part2Target, feedbackElement);
+        checkUserInput(userNumber, introDecimal, feedbackElement);
     };
 }
 
 
 function initPart3() {
 
+
 }
 
 
 function initPart4() {
-    const part4Target = generateRandomNumberForSection('part-4-prompt', { min: 1, max: 15 });
+    const part4Prompt = document.querySelector('#part-4-prompt #part-4-prompt-placeholder');
+    part4Prompt.textContent = introDecimal;
+
     const checkButton = document.getElementById('part-4-check-answer');
     const feedbackElement = document.getElementById('part-4-feedback');
 
@@ -128,7 +176,7 @@ function initPart4() {
         const playerBinary = playerBinarySlots.join('');
         const playerDecimal = parseInt(playerBinary, 2);
 
-        checkUserInput(playerDecimal, part4Target, feedbackElement);
+        checkUserInput(playerDecimal, introDecimal, feedbackElement);
     };
 }
 

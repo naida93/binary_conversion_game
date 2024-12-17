@@ -9,59 +9,40 @@
 </head>
 
 <body>
+    <template id="number-picker-template">
+        <div class="number-picker">
+            <div class="picker-button-container">
+              <button class="picker-button" id="increment-button">
+                <span class="arrow">▲</span>
+              </button>
+              <div class="picker-number" id="current-number">5</div>
+              <button class="picker-button" id="decrement-button">
+                <span class="arrow">▼</span>
+              </button>
+            </div>
+        </div>
+    </template>
+
     <div id="intro-wrapper">
         <h1 id="intro-heading"> Introduction to Binary Conversion </h1>
         <div id="intro-content">
             <!-- First Row -->
             <div id="intro-part-1" class="part-container">
                 <div id="intro-part-1-task" class="part-container-header">Zerlege die Zahl in ihre Teile!</div>
-                <div id="part-1-dropdowns">
+                <div id="part-1-exercise">
                     <div id="part-1-prompt">
                         <span id="part-1-prompt-placeholder" class="target-value">XXX</span>
                     </div>
-                    <label> = </label>
+                    <label>  =  </label>
                     <label id="label-1">100</label>
                     <label> * </label>
-                    <select class="digit-picker">
-                        <option value="0">0</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                        <option value="7">7</option>
-                        <option value="8">8</option>
-                        <option value="9">9</option>
-                    </select>
+                    <div id="number-picker-container-1"></div>
                     <label id="label-2"> + 10</label>
                     <label> * </label>
-                    <select class="digit-picker">
-                        <option value="0">0</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                        <option value="7">7</option>
-                        <option value="8">8</option>
-                        <option value="9">9</option>
-                    </select>
+                    <div id="number-picker-container-2"></div>
                     <label id="label-3"> + 1</label>
                     <label> * </label>
-                    <select class="digit-picker">
-                        <option value="0">0</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                        <option value="7">7</option>
-                        <option value="8">8</option>
-                        <option value="9">9</option>
-                    </select>
+                    <div id="number-picker-container-3"></div>
                 </div>
                 <button id="part-1-check-answer">Check Answer</button>
                 <div id="part-1-feedback"></div>
@@ -197,6 +178,9 @@
             <button onclick="restartGame()">Restart Game</button>
         </div>
     </div>
-    <script src="script.js"></script>
+    <script type="module" src="main.js"></script>
+    <script type="module" src="number-picker.js"></script>
 </body>
 </html>
+
+
