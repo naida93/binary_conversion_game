@@ -59,58 +59,38 @@
             <div id="intro-part-2" class="part-container">
                 <div id="intro-part-2-task" class="part-container-header">Baue sie Schritt für Schritt!</div>
                 <div id="part-2-exercise">
-                    <div id="part-2-prompt"><span id="part-2-prompt-placeholder" class="target-value">XXX</span></div>
-                    <label> = </label>
-                    <select class="digit-picker">
-                        <option value="0">0</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="4">4</option>
-                        <option value="8">8</option>
-                        <option value="16">16</option>
-                        <option value="32">32</option>
-                    </select>
-                    <label> + </label>
-                    <select class="digit-picker">
-                        <option value="0">0</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="4">4</option>
-                        <option value="8">8</option>
-                        <option value="16">16</option>
-                        <option value="32">32</option>
-                    </select>
-                    <label> + </label>
-                    <select class="digit-picker">
-                        <option value="0">0</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="4">4</option>
-                        <option value="8">8</option>
-                        <option value="16">16</option>
-                        <option value="32">32</option>
-                    </select>
-                    <label> + </label>
-                    <select class="digit-picker">
-                        <option value="0">0</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="4">4</option>
-                        <option value="8">8</option>
-                        <option value="16">16</option>
-                        <option value="32">32</option>
-                    </select>
-                    <label> + </label>
-                    <select class="digit-picker">
-                        <option value="0">0</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="4">4</option>
-                        <option value="8">8</option>
-                        <option value="16">16</option>
-                        <option value="32">32</option>
-                    </select>
-
+                    <div id="part-2-prompt-with-sign">
+                        <div id="part-2-prompt"><span id="part-2-prompt-placeholder" class="target-value">XXX</span></div>
+                        <label class="sign-label"> = </label>
+                        <div id="drop-zones" class="drop-zones">
+                            <div class="drop-zone" data-index="1"></div>
+                            <label class="sign-label"> + </label>
+                            <div class="drop-zone" data-index="2"></div>
+                            <label class="sign-label"> + </label>
+                            <div class="drop-zone" data-index="3"></div>
+                            <label class="sign-label"> + </label>
+                            <div class="drop-zone" data-index="4"></div>
+                            <label class="sign-label"> + </label>
+                            <div class="drop-zone" data-index="5"></div>
+                            <label class="sign-label"> + </label>
+                            <div class="drop-zone" data-index="6"></div>
+                            <label class="sign-label"> + </label>
+                            <div class="drop-zone" data-index="7"></div>
+                            <label class="sign-label"> + </label>
+                            <div class="drop-zone" data-index="8"></div>
+                        </div>
+                    </div>
+                    <div id="draggable-options" class="draggable-options">
+                        <div class="draggable-item" draggable="true" data-value="0">0</div>
+                        <div class="draggable-item" draggable="true" data-value="1">1</div>
+                        <div class="draggable-item" draggable="true" data-value="2">2</div>
+                        <div class="draggable-item" draggable="true" data-value="4">4</div>
+                        <div class="draggable-item" draggable="true" data-value="8">8</div>
+                        <div class="draggable-item" draggable="true" data-value="16">16</div>
+                        <div class="draggable-item" draggable="true" data-value="32">32</div>
+                        <div class="draggable-item" draggable="true" data-value="64">64</div>
+                        <div class="draggable-item" draggable="true" data-value="128">128</div>
+                    </div>
                 </div>
                 <button id="part-2-check-answer">Check Answer</button>
                 <div id="part-2-feedback"></div>
@@ -139,6 +119,8 @@
             </div>
             <button id="intro-arrow-3" class="arrow">←</button>
             <div id="intro-part-3" class="part-container">
+                <div>Hast du etwas Interessantes an den Zahlen aus der vorherigen Aufgabe bemerkt?</div>
+                <div>***</div>
                 <div>Jede Zahl hat nun zwei Zustände - ausgewählt / nicht ausgewählt.</div>
                 <!--div class="grid-row">
                     <div id="additional-slot-container"></div>

@@ -134,17 +134,64 @@ function initPart2() {
     const part2Prompt = document.querySelector('#part-2-prompt #part-2-prompt-placeholder');
     part2Prompt.textContent = introDecimal;
 
+    const draggableItems = document.querySelectorAll(".draggable-item");
+    const dropZones = document.querySelectorAll(".drop-zone");
     const checkButton = document.getElementById('part-2-check-answer');
     const feedbackElement = document.getElementById('part-2-feedback');
-    const digitPickers = document.querySelectorAll('#part-2-dropdowns .digit-picker');
 
-    // Event listener for the 'Check Answer' button
-    checkButton.onclick = () => {
-        const userDigits = Array.from(digitPickers).map(picker => parseInt(picker.value));
-        const userNumber = userDigits.reduce((sum, digit) => sum + digit, 0);
-        checkUserInput(userNumber, introDecimal, feedbackElement);
-    };
+    const userAnswers = {}; // Track values dropped into zones
+
+    // DRAG START: Set data being transferred
+    draggableItems.forEach((item) => {
+        item.addEventListener("dragstart", (e) => {
+            e.dataTransfer.setData("text/plain", item.dataset.value);
+            e.dataTransfer.setData("id", item.dataset.value);
+            setTimeout(() => item.classList.add("hidden"), 0);
+        });
+
+        item.addEventListener("dragend", (e) => {
+            e.target.classList.remove("hidden"); // Make visible again
+        });
+    });
+
+    // DRAG OVER: Allow dropping
+    dropZones.forEach((zone) => {
+        zone.addEventListener("dragover", (e) => e.preventDefault());
+
+        // DROP: Handle dropped items
+        zone.addEventListener("drop", (e) => {
+            e.preventDefault();
+
+            const value = e.dataTransfer.getData("text/plain");
+
+            // Ensure the current zone is cleared if already occupied
+            if (zone.firstChild && zone.firstChild.classList && zone.firstChild.classList.contains("draggable-item")) {
+                const existingItem = zone.firstChild;
+                document.getElementById("draggable-options").appendChild(existingItem);
+            }
+
+            // Append dragged item to the drop zone
+            const draggedItem = document.querySelector(`.draggable-item[data-value='${value}']`);
+            if (draggedItem) {
+                zone.innerHTML = ""; // Clear previous content
+                zone.appendChild(draggedItem);
+            }
+
+            // Update user answers
+            const index = zone.dataset.index;
+            userAnswers[index] = parseInt(value);
+        });
+
+    });
+
+    checkButton.addEventListener("click", () => {
+        const userSum = Object.values(userAnswers).reduce((sum, val) => sum + val, 0);
+        console.log(`Generated number: ${userSum}`)
+
+        checkUserInput(userSum, introDecimal, feedbackElement);
+    });
 }
+
 
 
 function initPart3() {

@@ -137,11 +137,21 @@ h1 {
 
 #part-2-exercise {
         display: flex;
+        flex-direction: column;
         align-items: center;
+        gap: 15px;
     }
 
-    #part-2-prompt {
-        display: inline;
+    #part-2-prompt-with-sign {
+        display: flex;
+        flex-direction: row;
+        gap: 5px;
+    }
+
+    #drop-zones {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
     }
 
 
@@ -483,3 +493,40 @@ button:active {
     text-align: center;
     color: #444;
 }
+
+
+/* Drag-and-Drop(s) styles*/
+    .draggable-options {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 20px;
+    }
+
+    .draggable-item {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 35px;
+        height: 35px;
+        background-color: #4CAF50;
+        font-weight: bold;
+        cursor: grab;
+        border-radius: 50%;
+        color: white;
+    }
+
+    .drop-zones {
+        display: flex;
+        gap: 5px;
+    }
+
+    .drop-zone {
+        width: 40px;
+        height: 40px;
+        background-color: lightgray;
+        text-align: center;
+        line-height: 80px;
+        font-weight: bold;
+        border: 2px dashed gray;
+        border-radius: 5px;
+    }
