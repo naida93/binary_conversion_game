@@ -67,7 +67,7 @@ const container = document.getElementById('pickers-container');
 
 function startGame() {
     generateRandomNumberInRange(1, 256);
-    //decimalValueEl.textContent = decimalNumber;
+    decimalValueEl.textContent = decimalNumber;
 
     renderFloors();
     renderBinaryInput('slot-container', 4, true);
