@@ -84,9 +84,9 @@ h1 {
     border-radius: 5px;
 }
 
-
 #part-1-exercise {
         display: flex;
+        flex-direction: row;
         justify-content: space-evenly;
         align-items: baseline;
         margin: 10px 0;
