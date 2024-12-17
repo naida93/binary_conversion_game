@@ -26,7 +26,7 @@ const container = document.getElementById('pickers-container');
 
     document.getElementById('intro-arrow-2').addEventListener('click', () => {
         document.getElementById('intro-part-3').style.display = 'block';
-        document.getElementById('intro-arrow-3').style.display = 'block';
+        /*document.getElementById('intro-arrow-3').style.display = 'block';*/
     });
 
     document.getElementById('intro-arrow-3').addEventListener('click', () => {
