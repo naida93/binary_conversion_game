@@ -1,0 +1,78 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f4f4f4;
+}
+
+.container {
+    display: flex;
+    gap: 20px;
+}
+
+.position {
+    cursor: pointer;
+    padding: 10px;
+    background-color: #d3d3d3;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+}
+
+.position:hover {
+    background-color: #a9a9a9;
+}
+
+.picker-popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+.picker-popup-content {
+    text-align: center;
+}
+
+.number-picker {
+    display: flex;
+    overflow-x: auto;
+    padding: 10px;
+}
+
+.number-picker button {
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
+    cursor: pointer;
+    border: none;
+    background-color: #f0f0f0;
+    border-radius: 50%;
+    transition: background-color 0.2s ease;
+    margin: 0 5px;
+}
+
+.number-picker button:hover {
+    background-color: #007bff;
+    color: white;
+}
+
+button {
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: #f44336;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #d32f2f;
+}

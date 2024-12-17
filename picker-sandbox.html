@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Number Picker with Arrows</title>
+  <style>
+    .number-picker {
+      width: 100px;
+      height: 200px;
+      font-family: Arial, sans-serif;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      background-color: #f9f9f9;
+    }
+
+    .picker-button {
+      width: 40px;
+      height: 40px;
+      background-color: #f0f0f0;
+      border: none;
+      border-radius: 50%;
+      font-size: 20px;
+      font-weight: bold;
+      color: #333;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    .picker-button:active {
+      background-color: #ddd;
+    }
+
+    .picker-number {
+      font-size: 36px;
+      font-weight: bold;
+      margin: 10px 0;
+      color: black;
+    }
+
+    .picker-button-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      height: 100%;
+    }
+
+    .arrow {
+      font-size: 24px;
+      font-weight: bold;
+      color: #333;
+      line-height: 1;
+    }
+  </style>
+</head>
+<body>
+  <div class="number-picker">
+    <div class="picker-button-container">
+      <button class="picker-button" id="increment-button">
+        <span class="arrow">▲</span>
+      </button>
+      <div class="picker-number" id="current-number">5</div>
+      <button class="picker-button" id="decrement-button">
+        <span class="arrow">▼</span>
+      </button>
+    </div>
+  </div>
+
+  <script>
+    const minNumber = 0; // Minimum value
+    const maxNumber = 9; // Maximum value
+    let currentNumber = 5; // Starting value
+
+    const currentNumberEl = document.getElementById('current-number');
+    const incrementButton = document.getElementById('increment-button');
+    const decrementButton = document.getElementById('decrement-button');
+
+    // Update the displayed number
+    function updateDisplay() {
+      currentNumberEl.textContent = currentNumber;
+    }
+
+    // Handle increment
+    incrementButton.addEventListener('click', () => {
+      if (currentNumber < maxNumber) {
+        currentNumber++;
+        updateDisplay();
+      }
+    });
+
+    // Handle decrement
+    decrementButton.addEventListener('click', () => {
+      if (currentNumber > minNumber) {
+        currentNumber--;
+        updateDisplay();
+      }
+    });
+
+    // Initialize the display
+    updateDisplay();
+  </script>
+</body>
+</html>

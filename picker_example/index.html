@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Number Picker Example</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="container">
+    <div class="position" id="position-100">
+        <p>10²: <span id="digit-100">?</span></p>
+        <button class="open-picker" data-position="100">Pick Number</button>
+    </div>
+    <div class="position" id="position-10">
+        <p>10¹: <span id="digit-10">?</span></p>
+        <button class="open-picker" data-position="10">Pick Number</button>
+    </div>
+    <div class="position" id="position-1">
+        <p>10⁰: <span id="digit-1">?</span></p>
+        <button class="open-picker" data-position="1">Pick Number</button>
+    </div>
+</div>
+
+<!-- Number Picker Popup -->
+<div id="picker-popup" class="picker-popup">
+    <div class="picker-popup-content">
+        <p>Select a number (0-9):</p>
+        <div id="number-picker" class="number-picker">
+            <!-- Numbers will be populated here -->
+        </div>
+        <button id="close-picker">Close</button>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
