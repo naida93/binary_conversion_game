@@ -31,7 +31,16 @@ const container = document.getElementById('pickers-container');
 
     document.getElementById('intro-arrow-3').addEventListener('click', () => {
         document.getElementById('intro-part-4').style.display = 'block';
+        document.getElementById('repeat-button').style.display = 'block';
     });
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('repeat-button').addEventListener('click', () => {
+        console.log('Repeat button clicked');
+        initGame();
+    });
+});
 
 
     document.addEventListener('DOMContentLoaded', () => {
@@ -66,7 +75,6 @@ const container = document.getElementById('pickers-container');
 
 
 function startGame() {
-    generateRandomNumberInRange(1, 256);
     decimalValueEl.textContent = decimalNumber;
     renderFloors();
     renderBinaryInput('slot-container', 4, true);
@@ -231,6 +239,7 @@ function initPart4() {
 
 
 function initGame() {
+    generateRandomNumberInRange(1, 256);
     initPart1();
     initPart2();
     initPart3();
