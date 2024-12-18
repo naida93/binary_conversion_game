@@ -13,11 +13,11 @@
         <div class="number-picker">
             <div class="picker-button-container">
               <button class="picker-button" id="increment-button">
-                <span class="arrow">▲</span>
+                <span class="picker-arrow">▲</span>
               </button>
               <div class="picker-number" id="current-number">5</div>
               <button class="picker-button" id="decrement-button">
-                <span class="arrow">▼</span>
+                <span class="picker-arrow">▼</span>
               </button>
             </div>
         </div>
@@ -52,10 +52,10 @@
                         <div id="number-picker-container-3"></div>
                     </div>
                 </div>
-                <button id="part-1-check-answer">Check Answer</button>
+                <button id="part-1-check-answer" class="game-button">Check Answer</button>
                 <div id="part-1-feedback"></div>
             </div>
-            <button id="intro-arrow-1" class="arrow">→</button>
+            <button id="intro-arrow-1" class="arrow" >→</button>
             <div id="intro-part-2" class="part-container">
                 <div id="intro-part-2-task" class="part-container-header">Baue sie Schritt für Schritt!</div>
                 <div id="part-2-exercise">
@@ -92,7 +92,7 @@
                         <div class="draggable-item" draggable="true" data-value="128">128</div>
                     </div>
                 </div>
-                <button id="part-2-check-answer">Check Answer</button>
+                <button id="part-2-check-answer" class="game-button">Check Answer</button>
                 <div id="part-2-feedback"></div>
             </div>
 
@@ -104,17 +104,19 @@
             <!-- Third Row -->
             <div id="intro-part-4" class="part-container">
                 <div id="intro-part-4-task" class="part-container-header">Und jetzt mach sie binär!</div>
-                <div id="part-4-body">
-                    <div id="part-4-prompt">
-                        <span id="part-4-prompt-placeholder" class="target-value">XXX</span>
+                <div id="part-4-exercise">
+                    <div id="part-4-prompt-with-label">
+                        <div id="part-4-prompt">
+                            <span id="part-4-prompt-placeholder" class="target-value">XXX</span>
+                        </div>
+                        <label class="sign-label"> = </label>
                     </div>
-                    <label> = </label>
                     <div id="part-4-binary-slots">
                         <div id="part-4-slot-container" class="binary-slot-container"></div>
                     </div>
 
                 </div>
-                <button id="part-4-check-answer">Check Answer</button>
+                <button id="part-4-check-answer" class="game-button">Check Answer</button>
                 <div id="part-4-feedback"></div>
             </div>
             <button id="intro-arrow-3" class="arrow">←</button>
@@ -157,8 +159,8 @@
                             <!-- Binary slots will be dynamically rendered here -->
                         </div>
                     </div>
-                    <button id="check-answer-button">Antwort überprüfen</button>
-                    <button id="next-task-button">Weiter</button>
+                    <button id="check-answer-button" class="game-button">Antwort überprüfen</button>
+                    <button id="next-task-button" class="game-button">Weiter</button>
                 </div>
             </div>
         </div>

@@ -26,7 +26,7 @@ const container = document.getElementById('pickers-container');
 
     document.getElementById('intro-arrow-2').addEventListener('click', () => {
         document.getElementById('intro-part-3').style.display = 'block';
-        /*document.getElementById('intro-arrow-3').style.display = 'block';*/
+        document.getElementById('intro-arrow-3').style.display = 'block';
     });
 
     document.getElementById('intro-arrow-3').addEventListener('click', () => {
@@ -209,9 +209,12 @@ function initPart4() {
 
     let playerBinarySlots = Array(4).fill(0); // To track user input
 
-    renderBinaryInput('part-4-slot-container', 4, {
+    const slots = Math.ceil(Math.log2(introDecimal + 1));
+    const slotLabels = Array.from({ length: slots }, (_, index) => `2^${slots - index - 1}`);
+
+    renderBinaryInput('part-4-slot-container', slots, {
         showDigits: false,
-        slotLabels: ['2^3', '2^2', '2^1', '2^0'],
+        slotLabels: slotLabels,
         onSlotClick: (index, value, allSlots) => {
             playerBinarySlots = allSlots; // Update binary slots as user toggles them
         }

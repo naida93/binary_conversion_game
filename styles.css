@@ -39,7 +39,7 @@ h1 {
     .part-container {
         display: flex;
         width: 425px;
-        height: 250px;
+        height: 300px;
         padding: 30px;
         background-color: #e0e0e0;
         border-radius: 8px;
@@ -57,7 +57,7 @@ h1 {
         display: flex;
         flex-direction: row;
         align-items: center;
-        justify-items: space-evenly;
+        justify-items: space-around;
     }
 
     .sign-label {
@@ -76,6 +76,10 @@ h1 {
 
 #intro-part-2, #intro-part-3, #intro-part-4 {
     display: none;
+}
+
+#intro-arrow-2 {
+    margin: 20px;
 }
 
 .grid-row {
@@ -143,6 +147,7 @@ h1 {
     }
 
     #part-2-prompt-with-drop-zones {
+        margin: 10px;
         display: flex;
         flex-direction: row;
         gap: 5px;
@@ -179,13 +184,20 @@ h1 {
       grid-row: 3;
     }
 
-#part-4-body {
-    display: flex;
-    flex-flow: row wrap;
-    /*background-color: #fff;  to delete later */
-    justify-content: space-evenly;
-    align-items: baseline;
-}
+#part-4-exercise {
+        display: flex;
+        flex-flow: row wrap;
+        /*background-color: #fff;  to delete later */
+        justify-content: space-evenly;
+        align-items: baseline;
+    }
+
+    #part-4-prompt-with-label {
+        margin: 10px;
+        display: flex;
+        flex-flow: row;
+        gap: 10px;
+    }
 
 
     .arrow {
@@ -317,15 +329,15 @@ h1 {
 }
 
 .slot {
-    width: 60px;
-    height: 60px;
+    width: 43px;
+    height: 43px;
     background: #f0f0f0;
     border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    font-size: 32px;
+    font-size: 20px;
     font-weight: bold;
     color: #333;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
@@ -373,7 +385,7 @@ h1 {
     color: #f44336;
 }
 
-button {
+.game-button {
     padding: 10px 20px;
     font-family: 'Fredoka One';
     font-size: 16px;
@@ -439,7 +451,7 @@ button:active {
 }*/
 
 .number-picker button {
-    background-color: #4CAF50; /* Green color */
+    background-color: transparent;  /*Green color */
     color: white;
     border: none;
     padding: 10px;
@@ -458,7 +470,7 @@ button:active {
 
 /* Style the value display */
 .number-picker div#picker-value {
-    font-size: 20px;
+    font-size: 30px;
     font-weight: bold;
     color: #333;
     margin: 5px 0;
