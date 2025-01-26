@@ -11,7 +11,7 @@ const decimalValueEl = document.getElementById('decimal-value');
 const elevatorEl = document.getElementById('elevator');
 const floorsEl = document.getElementById('floors');
 const binaryInputEl = document.getElementById('binary-input');
-const feedbackEl = document.getElementById('feedback');
+const feedbackEl = document.getElementById('game-feedback');
 const scoreEl = document.getElementById('score-value');
 const nextButton = document.getElementById('next-task-button');
 const checkAnswerButton = document.getElementById('check-answer-button');
@@ -93,12 +93,29 @@ function generateRandomNumberInRange(min, max) {
 
 
 function checkUserInput(userNumber, targetNumber, feedbackElement) {
+    const inputToTargetDifference = targetNumber - userNumber;
     if (userNumber === targetNumber) {
         feedbackElement.textContent = 'Correct! Well done!';
         feedbackElement.style.color = 'green';
     } else {
+
         feedbackElement.textContent = `Incorrect. The correct answer was ${targetNumber}. Try again!`;
         feedbackElement.style.color = 'red';
+    }
+}
+
+
+function provideInstantFeedback(userInputCallback, targetValue, feedbackElement) {
+    const userInput = userInputCallback(); // Get user input using a callback function
+    if (userInput === targetValue) {
+        feedbackElement.textContent = "Exakt!";
+        feedbackElement.style.color = "green";
+    } else if (userInput > targetValue) {
+        feedbackElement.textContent = `Du hast ${userInput} eingegeben, der Zielwert ist aber kleiner.`;
+        feedbackElement.style.color = "red";
+    } else {
+        feedbackElement.textContent = `Du hast ${userInput} eingegeben, der Zielwert ist aber größer.`;
+        feedbackElement.style.color = "red";
     }
 }
 
@@ -106,7 +123,7 @@ function checkUserInput(userNumber, targetNumber, feedbackElement) {
 function initPart1() {
     const part1Prompt = document.querySelector('#part-1-prompt-placeholder');
     part1Prompt.textContent = introDecimal;
-
+    const feedbackElement = document.getElementById('part-1-feedback');
     const multipliers = [100, 10, 1];
     const pickerContainerIds = [
         'number-picker-container-1',
@@ -114,27 +131,33 @@ function initPart1() {
         'number-picker-container-3'
     ];
 
-    // Render NumberPickers into their respective containers
+    function getUserInput() {
+        const userDigits = numberPickers.map((picker) => picker.getValue());
+        return userDigits.reduce(
+            (sum, digit, index) => sum + digit * multipliers[index],
+            0
+        );
+    }
+
     const numberPickers = []; // Store picker instances
     pickerContainerIds.forEach((id, index) => {
         const container = document.getElementById(id);
         container.innerHTML = ''; // Clear any existing content
         const picker = new NumberPicker(container, { min: 0, max: 9 });
         numberPickers.push(picker);
+
+        picker.onValueChange = () => {
+            provideInstantFeedback(getUserInput, introDecimal, feedbackElement);
+            console.log(`User input changed!`);
+        }
     });
 
-    const checkButton = document.getElementById('part-1-check-answer');
-    const feedbackElement = document.getElementById('part-1-feedback');
-
+    /*const checkButton = document.getElementById('part-1-check-answer');
     checkButton.onclick = () => {
-        const userDigits = numberPickers.map(picker => picker.getValue()); // Get picker values
-        const userNumber = userDigits.reduce(
-            (sum, digit, index) => sum + digit * multipliers[index],
-            0
-        );
-        console.log(`User input: ${userDigits}`);
+        const userNumber = getUserInput();
+        console.log(`User input: ${userNumber}`);
         checkUserInput(userNumber, introDecimal, feedbackElement);
-    };
+    };*/
 }
 
 
@@ -147,20 +170,28 @@ function initPart2() {
     const checkButton = document.getElementById('part-2-check-answer');
     const feedbackElement = document.getElementById('part-2-feedback');
 
-    const userAnswers = {}; // Track values dropped into zones
-
     // DRAG START: Set data being transferred
     draggableItems.forEach((item) => {
         item.addEventListener("dragstart", (e) => {
             e.dataTransfer.setData("text/plain", item.dataset.value);
-            e.dataTransfer.setData("id", item.dataset.value);
             setTimeout(() => item.classList.add("hidden"), 0);
         });
 
-        item.addEventListener("dragend", (e) => {
-            e.target.classList.remove("hidden"); // Make visible again
+        item.addEventListener("dragend", () => {
+            item.classList.remove("hidden"); // Make draggable item visible again
         });
     });
+
+    function getUserInput() {
+        let userSum = 0;
+        dropZones.forEach((zone) => {
+            const droppedItem = zone.querySelector(".draggable-item");
+            if (droppedItem) {
+                userSum += parseInt(droppedItem.dataset.value, 10); // Add value of the dropped item
+            }
+        });
+        return userSum;
+    }
 
     // DRAG OVER: Allow dropping
     dropZones.forEach((zone) => {
@@ -172,9 +203,9 @@ function initPart2() {
 
             const value = e.dataTransfer.getData("text/plain");
 
-            // Ensure the current zone is cleared if already occupied
-            if (zone.firstChild && zone.firstChild.classList && zone.firstChild.classList.contains("draggable-item")) {
-                const existingItem = zone.firstChild;
+            // Return any existing item in this zone back to the draggable options container
+            const existingItem = zone.querySelector(".draggable-item");
+            if (existingItem) {
                 document.getElementById("draggable-options").appendChild(existingItem);
             }
 
@@ -185,19 +216,23 @@ function initPart2() {
                 zone.appendChild(draggedItem);
             }
 
-            // Update user answers
-            const index = zone.dataset.index;
-            userAnswers[index] = parseInt(value);
+            provideInstantFeedback(getUserInput, introDecimal, feedbackElement);
+        });
+    });
+
+    /*checkButton.addEventListener("click", () => {
+        let userSum = 0;
+
+        dropZones.forEach((zone) => {
+            const droppedItem = zone.querySelector(".draggable-item");
+            if (droppedItem) {
+                userSum += parseInt(droppedItem.dataset.value, 10); // Add value of the dropped item
+            }
         });
 
-    });
-
-    checkButton.addEventListener("click", () => {
-        const userSum = Object.values(userAnswers).reduce((sum, val) => sum + val, 0);
-        console.log(`Generated number: ${userSum}`)
-
+        console.log(`User total input: ${userSum}`)
         checkUserInput(userSum, introDecimal, feedbackElement);
-    });
+    });*/
 }
 
 
@@ -225,16 +260,23 @@ function initPart4() {
         slotLabels: slotLabels,
         onSlotClick: (index, value, allSlots) => {
             playerBinarySlots = allSlots; // Update binary slots as user toggles them
+
+            function getUserInput() {
+                const playerBinary = playerBinarySlots.join('');
+                return parseInt(playerBinary, 2);
+            }
+
+            provideInstantFeedback(getUserInput, introDecimal, feedbackElement);
         }
     });
 
-    // Event listener for the 'Check Answer' button
+    /*/ Event listener for the 'Check Answer' button
     checkButton.onclick = () => {
         const playerBinary = playerBinarySlots.join('');
         const playerDecimal = parseInt(playerBinary, 2);
 
         checkUserInput(playerDecimal, introDecimal, feedbackElement);
-    };
+    };*/
 }
 
 
@@ -261,52 +303,6 @@ function renderFloors() {
         floorsEl.appendChild(floorDiv);
     }
 }
-
-/*function renderBinaryInput(containerId, numberOfSlots, showDigits = true) {
-    const slotContainer = document.getElementById(containerId);
-    slotContainer.innerHTML = '';
-
-    const binarySlots = Array(numberOfSlots).fill(0);
-
-    binarySlots.forEach((slot, index) => {
-        const slotDiv = document.createElement('div');
-        slotDiv.classList.add('slot');
-        if (slot === 1) {
-            slotDiv.classList.add('active');
-        } else {
-            slotDiv.classList.add('inactive');
-        }
-
-        if (showDigits) {
-            slotDiv.textContent = slot;
-        } else {
-            slotDiv.textContent = '';
-        }
-
-        slotDiv.onclick = () => {
-            binarySlots[index] = 1 - binarySlots[index];
-
-            if (binarySlots[index] === 1) {
-                slotDiv.classList.remove('inactive');
-                slotDiv.classList.add('active');
-            } else {
-                slotDiv.classList.remove('active');
-                slotDiv.classList.add('inactive');
-            }
-
-            if (showDigits) {
-                slotDiv.textContent = binarySlots[index];
-            }
-
-            if (containerId === 'additional-slot-container') {
-                const stateDisplay = document.getElementById('state-display');
-                stateDisplay.textContent = binarySlots[index] === 1 ? 'Ein' : 'Aus';
-            }
-        };
-
-        slotContainer.appendChild(slotDiv);
-    });
-}*/
 
 
 function renderBinaryInput(containerId, numberOfSlots, options = {}) {

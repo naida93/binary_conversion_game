@@ -39,7 +39,7 @@ h1 {
     .part-container {
         display: flex;
         width: 425px;
-        height: 300px;
+        height: 280px;
         padding: 30px;
         background-color: #e0e0e0;
         border-radius: 8px;
@@ -58,6 +58,7 @@ h1 {
         flex-direction: row;
         align-items: center;
         justify-items: space-around;
+        gap: 5px;
     }
 
     .sign-label {
@@ -134,10 +135,11 @@ h1 {
         cursor: pointer;
     }
 
-.feedback {
-        margin-top: 10px;
-        font-weight: bold;
-    }
+#part-1-feedback,
+#part-2-feedback,
+#part-4-feedback {
+    font-size: 21px;
+}
 
 #part-2-exercise {
         display: flex;
@@ -380,20 +382,21 @@ h1 {
     box-shadow: 0 4px 8px rgba(255, 235, 59, 0.7); /* Glowing effect */
 }
 
-/* Feedback */
-#feedback {
+
+#game-feedback {
     margin-top: 15px;
-    font-size: 18px;
+    font-size: 20px;
     font-weight: bold;
 }
 
-#feedback.correct {
+#game-feedback.correct {
     color: #4caf50;
 }
 
-#feedback.incorrect {
+#game-feedback.incorrect {
     color: #f44336;
 }
+
 
 .game-button {
     padding: 10px 20px;
