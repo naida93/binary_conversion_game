@@ -363,10 +363,14 @@ h1 {
     #lift-control {
     display: flex;
     flex-direction: column;
+    gap: 5px;
     text-align: center;
 
         #check-answer-button {
             width: 90%;
+            display: block;
+            margin: 0 auto;
+            margin-top: 20px;
         }
 
         #powersOf2 {
