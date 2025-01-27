@@ -560,3 +560,15 @@ button:active {
         border: 2px dashed gray;
         border-radius: 5px;
     }
+
+table {
+    table-layout: auto;
+    width: 100%;
+    margin: 10px auto;
+}
+
+td {
+  padding: 3px;
+  border: solid 1px;
+  text-align: center;
+}
