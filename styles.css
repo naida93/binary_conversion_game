@@ -90,10 +90,6 @@ h1 {
     align-items: center; /* Center the content vertically */
 }
 
-#additional-slot-container {
-    justify-self: center; /* Center the binary slot in its column */
-}
-
 #state-display {
     font-size: 1.2em;
     text-align: center; /* Center the state text in its column */
@@ -320,27 +316,27 @@ h1 {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow for the container */
     margin-top: 20px;
     width: 400px;
-    height: 500px;
+    height: 300px;
 
 
 }
 
 #lift-control {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     text-align: center;
 }
 
 #powersOf2 {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
-    gap: 40px;
+    gap: 10px;
 }
 
 .binary-slot-container {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: center;
     gap: 10px;
     margin-top: 10px;
@@ -352,7 +348,7 @@ h1 {
 /*for game part */
 #slot-container {
     display: flex;
-    gap: 20px; /* Space between slots */
+    gap: 10px; /* Space between slots */
 }
 
 .slot {

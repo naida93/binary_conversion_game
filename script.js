@@ -1,8 +1,8 @@
 import { NumberPicker } from './number-picker.js';
 
 let binarySlots = [0, 0, 0, 0];
-let decimalNumber = Math.floor(Math.random() * 256);
-let targetBinary = decimalNumber.toString(2).padStart(8, '0');
+let decimalNumber = Math.floor(Math.random() * 127);
+let targetBinary = decimalNumber.toString(2).padStart(7, '0');
 let score = 0;
 let introDecimal = null;
 let introBinary = null;
@@ -238,8 +238,6 @@ function initPart4() {
 
 function initIntro() {
     introDecimal = Math.floor(Math.random() * 256) + 1;
-    /*introBinary = introDecimal.toString(2).padStart(4, '0');
-    console.log(`Generated number: ${introDecimal}, Binary: ${introBinary}`);*/
     initPart1();
     initPart2();
     initPart3();
@@ -248,7 +246,7 @@ function initIntro() {
 
 function initGame() {
     // feedbackEl
-    renderBinaryInput('slot-container', 8, true);
+    renderBinaryInput('slot-container', 7, true);
     displayPowersOfTwo();
 
     startGame();
@@ -268,8 +266,8 @@ function startGame() {
 }
 
 nextButton.onclick = function () {
-    decimalNumber = Math.floor(Math.random() * 256);
-    targetBinary = decimalNumber.toString(2).padStart(8, '0');
+    decimalNumber = Math.floor(Math.random() * 127);
+    targetBinary = decimalNumber.toString(2).padStart(7, '0');
     decimalValueEl.textContent = decimalNumber;
     console.log(`Newly generated decimal: ${decimalNumber}, as binary: ${targetBinary}`);
 
@@ -388,7 +386,7 @@ function displayPowersOfTwo() {
     const column = document.getElementById('powersOf2');
 
     // Loop through the first 8 powers of 2
-    for (let i = 7; i > -1; i--) {
+    for (let i = 6; i > -1; i--) {
         // Create a new div for each power of 2
         const div = document.createElement('div');
         div.textContent = `2^${i} = ${Math.pow(2, i)}`;
