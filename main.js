@@ -27,6 +27,11 @@ const container = document.getElementById('pickers-container');
     document.getElementById('intro-arrow-2').addEventListener('click', () => {
         document.getElementById('intro-part-3').style.display = 'block';
         document.getElementById('intro-arrow-3').style.display = 'block';
+
+        setTimeout(() => {
+            const hiddenElement = document.getElementById("part-3-table");
+            hiddenElement.style.visibility = "visible"; // Show the hidden element
+        }, 3000); // 10,000 milliseconds = 10 seconds
     });
 
     document.getElementById('intro-arrow-3').addEventListener('click', () => {
@@ -119,7 +124,6 @@ function provideInstantFeedback(userInputCallback, targetValue, feedbackElement)
     }
 }
 
-
 function initPart1() {
     const part1Prompt = document.querySelector('#part-1-prompt-placeholder');
     part1Prompt.textContent = introDecimal;
@@ -159,7 +163,6 @@ function initPart1() {
         checkUserInput(userNumber, introDecimal, feedbackElement);
     };*/
 }
-
 
 function initPart2() {
     const part2Prompt = document.querySelector('#part-2-prompt #part-2-prompt-placeholder');
@@ -235,13 +238,10 @@ function initPart2() {
     });*/
 }
 
-
-
 function initPart3() {
 
 
 }
-
 
 function initPart4() {
     const part4Prompt = document.querySelector('#part-4-prompt #part-4-prompt-placeholder');
@@ -269,14 +269,6 @@ function initPart4() {
             provideInstantFeedback(getUserInput, introDecimal, feedbackElement);
         }
     });
-
-    /*/ Event listener for the 'Check Answer' button
-    checkButton.onclick = () => {
-        const playerBinary = playerBinarySlots.join('');
-        const playerDecimal = parseInt(playerBinary, 2);
-
-        checkUserInput(playerDecimal, introDecimal, feedbackElement);
-    };*/
 }
 
 
@@ -287,7 +279,6 @@ function initGame() {
     initPart3();
     initPart4();
 }
-
 
 document.addEventListener('DOMContentLoaded', () => {
     initGame();
