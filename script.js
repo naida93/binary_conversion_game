@@ -28,16 +28,17 @@ const userInputDisplay = document.querySelector('user-input-placeholder');
     document.getElementById('intro-arrow-2').addEventListener('click', () => {
         document.getElementById('intro-part-3').style.display = 'block';
         document.getElementById('intro-arrow-3').style.display = 'block';
-
-        setTimeout(() => {
-            const hiddenElement = document.getElementById("part-3-table");
-            hiddenElement.style.visibility = "visible"; // Show the hidden element
-        }, 3000); // 10,000 milliseconds = 10 seconds
     });
 
     document.getElementById('intro-arrow-3').addEventListener('click', () => {
         document.getElementById('intro-part-4').style.display = 'block';
         document.getElementById('repeat-button').style.display = 'block';
+    });
+
+    document.getElementById("unblur-button").addEventListener("click", () => {
+      const blurredSection = document.getElementById("part-3-table");
+
+      blurredSection.style.filter = "blur(0px)";
     });
 
 
