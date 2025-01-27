@@ -10,7 +10,7 @@
 
 <body>
     <div id="intro-wrapper">
-        <h1 id="intro-heading"> Introduction to Binary Conversion </h1>
+        <h1 id="intro-heading"> Einführung in die Binärkonvertierung </h1>
         <div id="intro-content">
             <!-- First Row -->
             <div id="intro-part-1" class="part-container">
@@ -88,6 +88,7 @@
             <!-- Third Row -->
             <div id="intro-part-4" class="part-container">
                 <div id="intro-part-4-task" class="part-container-header">Und jetzt mach sie binär!</div>
+                <div>*Du kannst beliebige Position auslassen, falls nötig.</div>
                 <div id="part-4-exercise">
                     <div id="part-4-prompt-with-label">
                         <div id="part-4-prompt">
@@ -107,18 +108,44 @@
                 <div id="part-3-prompt">
                     Hast du etwas besonderes an den Zahlen aus der vorherigen Aufgabe bemerkt?
                 </div>
-                <div>***</div>
-                <!---div>Jede Zahl hat nun zwei Zustände - ausgewählt / nicht ausgewählt.</div-->
-                <!--div class="grid-row">
-                    <div id="additional-slot-container"></div>
-                    <div id="state-display">Aus</div>
-                </div-->
+                <table id="part-3-table">
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>2<sup>0</sup></td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>2<sup>1</sup></td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>2<sup>2</sup></td>
+                        </tr>
+                        <tr>
+                            <td>8</td>
+                            <td>2<sup>3</sup></td>
+                        </tr>
+                        <tr>
+                            <td>16</td>
+                            <td>2<sup>4</sup></td>
+                        </tr>
+                        <tr>
+                            <td>32</td>
+                            <td>2<sup>5</sup></td>
+                        </tr>
+                        <tr>
+                            <td>64</td>
+                            <td>...</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
 
     <div id="game-container">
-        <h1>Binary Elevator Rescue</h1>
+        <h1>Binärer Aufzug  Rescue</h1>
         <p id="story">
             Du willst in den <span id="decimal-value" class="target-value"></span>. Stock,
             aber der Aufzug versteht nur binäre Befehle. Gib den richtigen Binärcode ein, um ihn zu

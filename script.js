@@ -28,6 +28,11 @@ const userInputDisplay = document.querySelector('user-input-placeholder');
     document.getElementById('intro-arrow-2').addEventListener('click', () => {
         document.getElementById('intro-part-3').style.display = 'block';
         document.getElementById('intro-arrow-3').style.display = 'block';
+
+        setTimeout(() => {
+            const hiddenElement = document.getElementById("part-3-table");
+            hiddenElement.style.visibility = "visible"; // Show the hidden element
+        }, 3000); // 10,000 milliseconds = 10 seconds
     });
 
     document.getElementById('intro-arrow-3').addEventListener('click', () => {
