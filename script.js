@@ -1,8 +1,8 @@
 import { NumberPicker } from './number-picker.js';
 
 let binarySlots = [0, 0, 0, 0];
-let decimalNumber = Math.floor(Math.random() * 16); 
-let targetBinary = decimalNumber.toString(2).padStart(4, '0');
+let decimalNumber = Math.floor(Math.random() * 256);
+let targetBinary = decimalNumber.toString(2).padStart(8, '0');
 let score = 0;
 let introDecimal = null;
 let introBinary = null;
@@ -16,6 +16,7 @@ const scoreEl = document.getElementById('score-value');
 const nextButton = document.getElementById('next-task-button');
 const checkAnswerButton = document.getElementById('check-answer-button');
 const container = document.getElementById('pickers-container');
+const userInputDisplay = document.querySelector('user-input-placeholder');
 
 
 // Handling progressive reveal
@@ -38,7 +39,7 @@ const container = document.getElementById('pickers-container');
 document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('repeat-button').addEventListener('click', () => {
         console.log('Repeat button clicked');
-        initGame();
+        initIntro();
     });
 });
 
@@ -74,37 +75,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
 
-function startGame() {
-    decimalValueEl.textContent = decimalNumber;
-    renderFloors();
-    renderBinaryInput('slot-container', 4, true);
-    updateElevatorPosition();
-    updateScore();
-}
-
-
-function generateRandomNumberInRange(min, max) {
-    introDecimal = Math.floor(Math.random() * (max - min + 1)) + min;
-    introBinary = introDecimal.toString(2).padStart(4, '0');
-    console.log(`Generated number: ${introDecimal}, Binary: ${introBinary}`);
-
-    return introDecimal
-}
-
-
-function checkUserInput(userNumber, targetNumber, feedbackElement) {
-    const inputToTargetDifference = targetNumber - userNumber;
-    if (userNumber === targetNumber) {
-        feedbackElement.textContent = 'Correct! Well done!';
-        feedbackElement.style.color = 'green';
-    } else {
-
-        feedbackElement.textContent = `Incorrect. The correct answer was ${targetNumber}. Try again!`;
-        feedbackElement.style.color = 'red';
-    }
-}
-
-
 function provideInstantFeedback(userInputCallback, targetValue, feedbackElement) {
     const userInput = userInputCallback(); // Get user input using a callback function
     if (userInput === targetValue) {
@@ -118,7 +88,6 @@ function provideInstantFeedback(userInputCallback, targetValue, feedbackElement)
         feedbackElement.style.color = "red";
     }
 }
-
 
 function initPart1() {
     const part1Prompt = document.querySelector('#part-1-prompt-placeholder');
@@ -159,7 +128,6 @@ function initPart1() {
         checkUserInput(userNumber, introDecimal, feedbackElement);
     };*/
 }
-
 
 function initPart2() {
     const part2Prompt = document.querySelector('#part-2-prompt #part-2-prompt-placeholder');
@@ -235,13 +203,10 @@ function initPart2() {
     });*/
 }
 
-
-
 function initPart3() {
 
 
 }
-
 
 function initPart4() {
     const part4Prompt = document.querySelector('#part-4-prompt #part-4-prompt-placeholder');
@@ -269,41 +234,63 @@ function initPart4() {
             provideInstantFeedback(getUserInput, introDecimal, feedbackElement);
         }
     });
-
-    /*/ Event listener for the 'Check Answer' button
-    checkButton.onclick = () => {
-        const playerBinary = playerBinarySlots.join('');
-        const playerDecimal = parseInt(playerBinary, 2);
-
-        checkUserInput(playerDecimal, introDecimal, feedbackElement);
-    };*/
 }
 
-
-function initGame() {
-    generateRandomNumberInRange(1, 256);
+function initIntro() {
+    introDecimal = Math.floor(Math.random() * 256) + 1;
+    /*introBinary = introDecimal.toString(2).padStart(4, '0');
+    console.log(`Generated number: ${introDecimal}, Binary: ${introBinary}`);*/
     initPart1();
     initPart2();
     initPart3();
     initPart4();
 }
 
+function initGame() {
+    // feedbackEl
+    renderBinaryInput('slot-container', 8, true);
+    displayPowersOfTwo();
+
+    startGame();
+}
 
 document.addEventListener('DOMContentLoaded', () => {
+    initIntro();
     initGame();
 });
 
+function startGame() {
+    decimalValueEl.textContent = decimalNumber;
 
-function renderFloors() {
+    renderFloors(decimalNumber);
+    updateElevatorPosition(1.5);
+    updateScore();
+}
+
+nextButton.onclick = function () {
+    decimalNumber = Math.floor(Math.random() * 256);
+    targetBinary = decimalNumber.toString(2).padStart(8, '0');
+    decimalValueEl.textContent = decimalNumber;
+    console.log(`Newly generated decimal: ${decimalNumber}, as binary: ${targetBinary}`);
+
+    renderFloors(decimalNumber);
+    updateElevatorPosition(1.5);
+};
+
+
+function renderFloors(currentFloor, totalFloors = 256) {
     floorsEl.innerHTML = '';
-    for (let i = 15; i >= 0; i--) {
+
+    const startFloor = Math.max(0, currentFloor - 4);
+    const endFloor = Math.min(totalFloors - 1, startFloor + 9);
+
+    for (let i = endFloor; i >= startFloor; i--) {
         const floorDiv = document.createElement('div');
         floorDiv.classList.add('floor');
-        floorDiv.textContent = `Floor ${i}`;
+        floorDiv.textContent = `${i}. Etage`;
         floorsEl.appendChild(floorDiv);
     }
 }
-
 
 function renderBinaryInput(containerId, numberOfSlots, options = {}) {
     const {
@@ -363,12 +350,8 @@ function renderBinaryInput(containerId, numberOfSlots, options = {}) {
     });
 }
 
-
-
-function updateElevatorPosition() {
-    const totalFloors = 16;
-    const floorHeight = 100 / totalFloors;
-    elevatorEl.style.bottom = `${decimalNumber * floorHeight}%`;
+function updateElevatorPosition(targetPosition) {
+    elevatorEl.style.bottom = `${targetPosition * 10}%`;
 }
 
 function showFeedback(message, isCorrect) {
@@ -388,12 +371,11 @@ checkAnswerButton.onclick = function () {
     const playerBinary = Array.from(slotDivs)
         .map((slotDiv) => slotDiv.textContent)
         .join('');
+    console.log(`Binary input from user: ${playerBinary}, Binary target: ${targetBinary}`);
 
     if (playerBinary === targetBinary) {
         score += 1;
-        decimalNumber = (decimalNumber + 1) % 16;
-        targetBinary = decimalNumber.toString(2).padStart(4, '0');
-        updateElevatorPosition();
+        updateElevatorPosition(5);
         showFeedback('Richtig! Der Aufzug hat sich bewegt!', true);
     } else {
         showFeedback('Falsch! Versuch es noch einmal.', false);
@@ -401,12 +383,20 @@ checkAnswerButton.onclick = function () {
     updateScore();
 };
 
-nextButton.onclick = function () {
-    decimalNumber = Math.floor(Math.random() * 16);
-    targetBinary = decimalNumber.toString(2).padStart(4, '0');
-    binarySlots = [0, 0, 0, 0];
-    startGame();
-    updateElevatorPosition();
-};
+function displayPowersOfTwo() {
+    // Get the div where we want to display the powers of 2
+    const column = document.getElementById('powersOf2');
+
+    // Loop through the first 8 powers of 2
+    for (let i = 7; i > -1; i--) {
+        // Create a new div for each power of 2
+        const div = document.createElement('div');
+        div.textContent = `2^${i} = ${Math.pow(2, i)}`;
+        // Append the new div to the column
+        column.appendChild(div);
+    }
+}
+
+
 
 startGame();
