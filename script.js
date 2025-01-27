@@ -126,13 +126,6 @@ function initPart1() {
             console.log(`User input changed!`);
         }
     });
-
-    /*const checkButton = document.getElementById('part-1-check-answer');
-    checkButton.onclick = () => {
-        const userNumber = getUserInput();
-        console.log(`User input: ${userNumber}`);
-        checkUserInput(userNumber, introDecimal, feedbackElement);
-    };*/
 }
 
 function initPart2() {
