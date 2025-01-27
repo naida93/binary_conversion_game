@@ -272,6 +272,18 @@ h1 {
     align-items: center; /* Centers all child elements horizontally */
 }
 
+#game-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 90%;
+}
+
+#level-icon {
+    font-size: 30px;
+}
+
 #playing-field {
     margin: 20px auto;
     width: 80%;
@@ -332,6 +344,7 @@ h1 {
     border-radius: 10px;
 }
 
+
 #control-panel-container {
     display: flex;
     flex-direction: column;
@@ -347,20 +360,25 @@ h1 {
     height: 300px;
 
 
-}
-
-#lift-control {
+    #lift-control {
     display: flex;
     flex-direction: column;
     text-align: center;
+
+        #check-answer-button {
+            width: 90%;
+        }
+
+        #powersOf2 {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 10px;
+            visibility: visible;
+        }
+    }
 }
 
-#powersOf2 {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 10px;
-}
 
 .binary-slot-container {
     display: flex;
@@ -459,7 +477,6 @@ button:active {
     background-color: #ff5733;
 }
 
-/* Score */
 #score-container {
     font-size: 21px;
     font-weight: bold;
@@ -599,3 +616,25 @@ button:active {
         border: 2px dashed gray;
         border-radius: 5px;
     }
+
+
+@property --progress-value {
+  syntax: "<integer>";
+  initial-value: 3;
+  inherits: false;
+}
+
+.progress-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 75px;
+  height: 75px;
+  border-radius: 50%;
+  background:
+    radial-gradient(closest-side, white 79%, transparent 80% 100%),
+    conic-gradient(#4caf50 calc(var(--progress-value) * 1%), #E0E0E0 0);
+  animation: progress 2s 1 forwards;
+}
+

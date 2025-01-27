@@ -1,11 +1,13 @@
 import { NumberPicker } from './number-picker.js';
 
 let binarySlots = [0, 0, 0, 0];
-let decimalNumber = Math.floor(Math.random() * 127);
-let targetBinary = decimalNumber.toString(2).padStart(7, '0');
-let score = 0;
+let decimalNumber = null;//Math.floor(Math.random() * 127);
+let targetBinary = null; //decimalNumber.toString(2).padStart(7, '0');
 let introDecimal = null;
 let introBinary = null;
+let currentLevelIndex = 0;
+let currentTaskIndex = 0;
+let score = 0;
 
 const decimalValueEl = document.getElementById('decimal-value');
 const elevatorEl = document.getElementById('elevator');
@@ -17,29 +19,35 @@ const nextButton = document.getElementById('next-task-button');
 const checkAnswerButton = document.getElementById('check-answer-button');
 const container = document.getElementById('pickers-container');
 const userInputDisplay = document.querySelector('user-input-placeholder');
+const levels = [
+    { difficulty: 'easy', totalTasks: 3, maxDecimalValue: 63, showHints: true },
+    { difficulty: 'medium', totalTasks: 3, maxDecimalValue: 265, showHints: true },
+    { difficulty: 'hard', totalTasks: 3, maxDecimalValue: 255, showHints: false }
+];
+const levelDisplay = document.getElementById('level-icon');
+const progressBar = document.querySelector('.progress-bar');
 
 
-// Handling progressive reveal
-    document.getElementById('intro-arrow-1').addEventListener('click', () => {
-        document.getElementById('intro-part-2').style.display = 'block';
-        document.getElementById('intro-arrow-2').style.display = 'block';
-    });
 
-    document.getElementById('intro-arrow-2').addEventListener('click', () => {
-        document.getElementById('intro-part-3').style.display = 'block';
-        document.getElementById('intro-arrow-3').style.display = 'block';
-    });
+document.getElementById('intro-arrow-1').addEventListener('click', () => {
+    document.getElementById('intro-part-2').style.display = 'block';
+    document.getElementById('intro-arrow-2').style.display = 'block';
+});
 
-    document.getElementById('intro-arrow-3').addEventListener('click', () => {
-        document.getElementById('intro-part-4').style.display = 'block';
-        document.getElementById('repeat-button').style.display = 'block';
-    });
+document.getElementById('intro-arrow-2').addEventListener('click', () => {
+    document.getElementById('intro-part-3').style.display = 'block';
+    document.getElementById('intro-arrow-3').style.display = 'block';
+});
 
-    document.getElementById("unblur-button").addEventListener("click", () => {
-      const blurredSection = document.getElementById("part-3-table");
+document.getElementById('intro-arrow-3').addEventListener('click', () => {
+    document.getElementById('intro-part-4').style.display = 'block';
+    document.getElementById('repeat-button').style.display = 'block';
+});
 
-      blurredSection.style.filter = "blur(0px)";
-    });
+document.getElementById("unblur-button").addEventListener("click", () => {
+  const blurredSection = document.getElementById("part-3-table");
+  blurredSection.style.filter = "blur(0px)";
+});
 
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -248,7 +256,6 @@ function initGame() {
     renderBinaryInput('slot-container', 7, true);
     displayPowersOfTwo();
 
-    startGame();
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -257,23 +264,95 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function startGame() {
-    decimalValueEl.textContent = decimalNumber;
+    currentLevelIndex = 0;
+    levelDisplay.textContent = currentLevelIndex + 1;
+    currentTaskIndex = 0;
+    score = 0;
+    scoreEl.textContent = score;
+
+    playNextTask();
+
 
     renderFloors(decimalNumber);
     updateElevatorPosition(1.5);
-    updateScore();
+    //updateScore();
 }
 
-nextButton.onclick = function () {
-    decimalNumber = Math.floor(Math.random() * 127);
+
+function playNextTask() {
+    const currentLevel = levels[currentLevelIndex];
+
+    if (currentTaskIndex >= currentLevel.totalTasks) {
+        currentLevelIndex += 1;
+        levelDisplay.textContent = currentLevelIndex + 1;
+        currentTaskIndex = 0;
+        progressBar.style.setProperty('--progress-value', 3);
+
+        /*if (currentLevelIndex >= levels.length) {
+            endGame();
+            return;
+        }*/
+    }
+
+    const levelSettings = levels[currentLevelIndex];
+    generateNewTask(levelSettings.maxDecimalValue, levelSettings.showHints);
+}
+
+function generateNewTask(maxValue, showHints) {
+    decimalNumber = Math.floor(Math.random() * (maxValue + 1));
     targetBinary = decimalNumber.toString(2).padStart(7, '0');
+
+    console.log(`Task ${currentTaskIndex + 1} (${levels[currentLevelIndex].difficulty}): Decimal ${decimalNumber}, Binary ${targetBinary}`);
+
+    // Update UI
     decimalValueEl.textContent = decimalNumber;
-    console.log(`Newly generated decimal: ${decimalNumber}, as binary: ${targetBinary}`);
+    if (showHints) {
+        document.getElementById('powersOf2').style.visibility = "visible";
+    } else {
+        document.getElementById('powersOf2').style.visibility = "hidden";
+    }
 
     renderFloors(decimalNumber);
     updateElevatorPosition(1.5);
-};
+}
 
+checkAnswerButton.onclick = function () {
+    const slotContainer = document.getElementById('slot-container');
+    const slotDivs = slotContainer.querySelectorAll('.slot');
+
+    const playerBinary = Array.from(slotDivs)
+        .map((slotDiv) => slotDiv.textContent)
+        .join('');
+    console.log(`Binary input from user: ${playerBinary}, Binary target: ${targetBinary}`);
+    handlePlayerInput(playerBinary);
+}
+
+function handlePlayerInput(playerBinary) {
+    if (playerBinary === targetBinary) {
+        updateScore(true);
+        updateElevatorPosition(5);
+        showFeedback('Richtig! Der Aufzug hat sich bewegt!', true);
+    } else {
+        showFeedback('Falsch! Versuch es noch einmal.', false);
+        return;
+    }
+
+    currentTaskIndex += 1;
+    // TODO add timeout
+    playNextTask();
+}
+
+function updateScore(correct) {
+    //const multiplier = levels[currentLevelIndex].difficulty === 'easy' ? 1 : levels[currentLevelIndex].difficulty === 'medium' ? 2 : 3;
+    //score += correct ? multiplier : 0;
+    score += 1;
+    scoreEl.textContent = score;
+    //scoreEl.textContent = `${score}`;
+
+    const totalTasks = 3;
+    const progressPercent = Math.round(((currentTaskIndex + 1) / totalTasks) * 100);
+    progressBar.style.setProperty('--progress-value', progressPercent);
+}
 
 function renderFloors(currentFloor, totalFloors = 256) {
     floorsEl.innerHTML = '';
@@ -357,34 +436,9 @@ function showFeedback(message, isCorrect) {
     feedbackEl.classList.toggle('incorrect', !isCorrect);
 }
 
-function updateScore() {
-    scoreEl.textContent = `${score}`;
-}
-
-checkAnswerButton.onclick = function () {
-    const slotContainer = document.getElementById('slot-container');
-    const slotDivs = slotContainer.querySelectorAll('.slot');
-
-    const playerBinary = Array.from(slotDivs)
-        .map((slotDiv) => slotDiv.textContent)
-        .join('');
-    console.log(`Binary input from user: ${playerBinary}, Binary target: ${targetBinary}`);
-
-    if (playerBinary === targetBinary) {
-        score += 1;
-        updateElevatorPosition(5);
-        showFeedback('Richtig! Der Aufzug hat sich bewegt!', true);
-    } else {
-        showFeedback('Falsch! Versuch es noch einmal.', false);
-    }
-    updateScore();
-};
-
 function displayPowersOfTwo() {
-    // Get the div where we want to display the powers of 2
     const column = document.getElementById('powersOf2');
 
-    // Loop through the first 8 powers of 2
     for (let i = 6; i > -1; i--) {
         // Create a new div for each power of 2
         const div = document.createElement('div');

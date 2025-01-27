@@ -146,14 +146,21 @@
     </div>
 
     <div id="game-container">
-        <h1> Rettung aus dem Binären Aufzug </h1>
+        <div id="game-header">
+            <p id="score-container">
+                Punkte: <span id="score-value">0</span>
+            </p>
+            <h1> Rettung aus dem Binären Aufzug </h1>
+            <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+                <span id="level-icon">Level</span>
+            </div>
+        </div>
+
         <p id="story">
             Du willst in den <span id="decimal-value" class="target-value"></span>. Stock,
             aber der Aufzug versteht nur binäre Befehle. Gib den richtigen Binärcode ein, um ihn zu
             bewegen!</p>
-        <p id="score-container">
-            Score: <span id="score-value">0</span>
-        </p>
+
         <p id="game-feedback"></p>
 
         <div id="playing-field">
@@ -171,10 +178,7 @@
                         <!-- Binary slots will be dynamically rendered here -->
                     </div>
                     <div id="powersOf2"></div>
-                    <div>
-                        <button id="check-answer-button" class="game-button">Antwort überprüfen</button>
-                        <button id="next-task-button" class="game-button">Weiter</button>
-                    </div>
+                    <button id="check-answer-button" class="game-button">Antwort überprüfen</button>
                 </div>
             </div>
         </div>
