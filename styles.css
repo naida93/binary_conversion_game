@@ -373,8 +373,9 @@ h1 {
         }
 
         #powersOf2 {
-            display: flex;
+            display: block flex;
             flex-direction: row;
+            justify-items: space evenly;
             align-items: center;
             gap: 10px;
             visibility: hidden;

@@ -301,6 +301,7 @@ function generateNewTask(maxValue, showHints) {
     decimalValueEl.textContent = decimalNumber;
     if (showHints) {
         document.getElementById('powersOf2').style.visibility = "visible";
+        displayPowersOfTwo();
     } else {
         document.getElementById('powersOf2').style.visibility = "hidden";
     }
@@ -442,10 +443,15 @@ function displayPowersOfTwo() {
     powers.reverse().forEach((power, index) => {
         const hint = document.createElement('div');
         hint.className = 'hint';
-
         const reverseIndex = powers.length - 1 - index;
 
-        hint.innerHTML = `2<sup>${reverseIndex}</sup> = ${power}`;
+        if (currentLevelIndex === 0) {
+            hint.innerHTML = `2<sup>${reverseIndex}</sup> = ${power}`;
+
+        } else {
+            hint.innerHTML = `2<sup>${reverseIndex}</sup>`;
+            powersOf2Container.style.gap = '40px';
+        }
         powersOf2Container.appendChild(hint);
     });
 }
