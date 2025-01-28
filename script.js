@@ -22,7 +22,7 @@ const userInputDisplay = document.querySelector('user-input-placeholder');
 const levels = [
     { difficulty: 'easy', totalTasks: 3, maxDecimalValue: 63, showHints: true },
     { difficulty: 'medium', totalTasks: 3, maxDecimalValue: 127, showHints: true },
-    { difficulty: 'hard', totalTasks: 3, maxDecimalValue: 127, showHints: false }
+    { difficulty: 'hard', totalTasks: 5, maxDecimalValue: 127, showHints: false }
 ];
 const levelDisplay = document.getElementById('level-icon');
 const progressBar = document.querySelector('.progress-bar');
@@ -281,10 +281,10 @@ function playNextTask() {
         currentTaskIndex = 0;
         progressBar.style.setProperty('--progress-value', 3);
 
-        /*if (currentLevelIndex >= levels.length) {
+        if (currentLevelIndex >= levels.length) {
             endGame();
             return;
-        }*/
+        }
     }
 
     const levelSettings = levels[currentLevelIndex];
@@ -297,7 +297,6 @@ function generateNewTask(maxValue, showHints) {
 
     console.log(`Task ${currentTaskIndex + 1} (${levels[currentLevelIndex].difficulty}): Decimal ${decimalNumber}, Binary ${targetBinary}`);
 
-    // Update UI
     decimalValueEl.textContent = decimalNumber;
     if (showHints) {
         document.getElementById('powersOf2').style.visibility = "visible";
@@ -341,7 +340,8 @@ function updateScore(correct) {
     scoreEl.textContent = score;
     //scoreEl.textContent = `${score}`;
 
-    const totalTasks = 3;
+    const levelSettings = levels[currentLevelIndex]
+    const totalTasks = levelSettings.totalTasks;
     const progressPercent = Math.round(((currentTaskIndex + 1) / totalTasks) * 100);
     progressBar.style.setProperty('--progress-value', progressPercent);
 }
