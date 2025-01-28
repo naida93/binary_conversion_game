@@ -251,16 +251,8 @@ function initIntro() {
     initPart4();
 }
 
-function initGame() {
-    // feedbackEl
-    renderBinaryInput('slot-container', 7, true);
-    displayPowersOfTwo();
-
-}
-
 document.addEventListener('DOMContentLoaded', () => {
     initIntro();
-    initGame();
 });
 
 function startGame() {
@@ -274,8 +266,8 @@ function startGame() {
 
 
     renderFloors(decimalNumber);
-    updateElevatorPosition(1.5);
-    //updateScore();
+    renderBinaryInput('slot-container', 7, true);
+    displayPowersOfTwo();
 }
 
 
@@ -284,6 +276,7 @@ function playNextTask() {
 
     if (currentTaskIndex >= currentLevel.totalTasks) {
         currentLevelIndex += 1;
+        window.alert("Du hast das Level geschafft!");
         levelDisplay.textContent = currentLevelIndex + 1;
         currentTaskIndex = 0;
         progressBar.style.setProperty('--progress-value', 3);
@@ -299,7 +292,7 @@ function playNextTask() {
 }
 
 function generateNewTask(maxValue, showHints) {
-    decimalNumber = Math.floor(Math.random() * (maxValue + 1));
+    decimalNumber = Math.floor(Math.random() * (maxValue + 1) + 1);
     targetBinary = decimalNumber.toString(2).padStart(7, '0');
 
     console.log(`Task ${currentTaskIndex + 1} (${levels[currentLevelIndex].difficulty}): Decimal ${decimalNumber}, Binary ${targetBinary}`);
@@ -333,13 +326,12 @@ function handlePlayerInput(playerBinary) {
         updateElevatorPosition(5);
         showFeedback('Richtig! Der Aufzug hat sich bewegt!', true);
     } else {
-        showFeedback('Falsch! Versuch es noch einmal.', false);
+        showFeedback('Falsch :( Versuch es noch einmal.', false);
         return;
     }
 
     currentTaskIndex += 1;
-    // TODO add timeout
-    playNextTask();
+    setTimeout(playNextTask, 3000);
 }
 
 function updateScore(correct) {
@@ -427,7 +419,9 @@ function renderBinaryInput(containerId, numberOfSlots, options = {}) {
 }
 
 function updateElevatorPosition(targetPosition) {
+    console.log("Updating elevator position.");
     elevatorEl.style.bottom = `${targetPosition * 10}%`;
+
 }
 
 function showFeedback(message, isCorrect) {
@@ -447,7 +441,5 @@ function displayPowersOfTwo() {
         column.appendChild(div);
     }
 }
-
-
 
 startGame();
