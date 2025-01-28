@@ -26,6 +26,7 @@ const levels = [
 ];
 const levelDisplay = document.getElementById('level-icon');
 const progressBar = document.querySelector('.progress-bar');
+const powersOf2Container = document.getElementById('powersOf2');
 
 
 
@@ -348,8 +349,8 @@ function updateScore(correct) {
 
 function endGame() {
     alert(`Game Over! Your final score is: ${score}`);
-    // Optionally restart the game
-    //startGame();
+
+    startGame();
 }
 
 function renderFloors(currentFloor, totalFloors = 256) {
@@ -425,7 +426,6 @@ function renderBinaryInput(containerId, numberOfSlots, options = {}) {
 }
 
 function updateElevatorPosition(targetPosition) {
-    console.log("Updating elevator position.");
     elevatorEl.style.bottom = `${targetPosition * 10}%`;
 
 }
@@ -437,7 +437,7 @@ function showFeedback(message, isCorrect) {
 }
 
 function displayPowersOfTwo() {
-    const column = document.getElementById('powersOf2');
+    /*const column = document.getElementById('powersOf2');
 
     for (let i = 6; i > -1; i--) {
         // Create a new div for each power of 2
@@ -445,7 +445,16 @@ function displayPowersOfTwo() {
         div.textContent = `2^${i} = ${Math.pow(2, i)}`;
         // Append the new div to the column
         column.appendChild(div);
-    }
+    }*/
+    powersOf2Container.innerHTML = '';
+
+    const powers = [64, 32, 16, 8, 4, 2, 1];
+    powers.forEach((power, index) => {
+        const hint = document.createElement('div');
+        hint.className = 'hint';
+        hint.textContent = `2^${index} = ${power}`;
+        powersOf2Container.appendChild(hint);
+    });
 }
 
 startGame();
