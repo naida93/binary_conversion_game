@@ -280,6 +280,15 @@ h1 {
     width: 90%;
 }
 
+#progress-bar-with-label {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    gap: 15px;
+    font-size: 21px;
+    font-weight: bold;
+}
+
 #level-icon {
     font-size: 30px;
 }
@@ -364,6 +373,7 @@ h1 {
     flex-direction: column;
     gap: 5px;
     text-align: center;
+    justify-items: center;
 
         #check-answer-button {
             width: 90%;

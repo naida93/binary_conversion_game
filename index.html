@@ -111,6 +111,7 @@
                     </div>
                     <button id="unblur-button" class="game-button">
                         <img src="./assets/lightbulb-2.png" alt="Lightbulb" style="width: 50px; height: 35px;">
+                        <!--span class="button-label"> Press </span-->
                     </button>
                 </div>
                 <table id="part-3-table" >
@@ -149,8 +150,11 @@
         <div id="game-header">
             <p id="score-container"> Punkte: <span id="score-value">0</span></p>
             <h1> Rettung aus dem Binären Aufzug </h1>
-            <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100">
-                <span id="level-icon">Level</span>
+            <div id="progress-bar-with-label">
+                <div> Level: </div>
+                <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+                    <span id="level-icon">Level</span>
+                </div>
             </div>
         </div>
 

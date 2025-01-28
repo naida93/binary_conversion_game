@@ -20,8 +20,8 @@ const checkAnswerButton = document.getElementById('check-answer-button');
 const container = document.getElementById('pickers-container');
 const userInputDisplay = document.querySelector('user-input-placeholder');
 const levels = [
-    { difficulty: 'easy', totalTasks: 3, maxDecimalValue: 63, showHints: true },
-    { difficulty: 'medium', totalTasks: 3, maxDecimalValue: 127, showHints: true },
+    { difficulty: 'easy', totalTasks: 3, maxDecimalValue: 32, showHints: true },
+    { difficulty: 'medium', totalTasks: 3, maxDecimalValue: 63, showHints: true },
     { difficulty: 'hard', totalTasks: 5, maxDecimalValue: 127, showHints: false }
 ];
 const levelDisplay = document.getElementById('level-icon');
