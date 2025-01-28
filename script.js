@@ -437,22 +437,15 @@ function showFeedback(message, isCorrect) {
 }
 
 function displayPowersOfTwo() {
-    /*const column = document.getElementById('powersOf2');
-
-    for (let i = 6; i > -1; i--) {
-        // Create a new div for each power of 2
-        const div = document.createElement('div');
-        div.textContent = `2^${i} = ${Math.pow(2, i)}`;
-        // Append the new div to the column
-        column.appendChild(div);
-    }*/
     powersOf2Container.innerHTML = '';
-
-    const powers = [64, 32, 16, 8, 4, 2, 1];
-    powers.forEach((power, index) => {
+    const powers = [1, 2, 4, 8, 16, 32, 64];
+    powers.reverse().forEach((power, index) => {
         const hint = document.createElement('div');
         hint.className = 'hint';
-        hint.textContent = `2^${index} = ${power}`;
+
+        const reverseIndex = powers.length - 1 - index;
+
+        hint.innerHTML = `2<sup>${reverseIndex}</sup> = ${power}`;
         powersOf2Container.appendChild(hint);
     });
 }
