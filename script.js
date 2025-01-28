@@ -292,7 +292,7 @@ function playNextTask() {
 }
 
 function generateNewTask(maxValue, showHints) {
-    decimalNumber = Math.floor(Math.random() * (maxValue + 1) + 1);
+    decimalNumber = Math.floor(Math.random() * (maxValue + 1));
     targetBinary = decimalNumber.toString(2).padStart(7, '0');
 
     console.log(`Task ${currentTaskIndex + 1} (${levels[currentLevelIndex].difficulty}): Decimal ${decimalNumber}, Binary ${targetBinary}`);
@@ -344,6 +344,12 @@ function updateScore(correct) {
     const totalTasks = levelSettings.totalTasks;
     const progressPercent = Math.round(((currentTaskIndex + 1) / totalTasks) * 100);
     progressBar.style.setProperty('--progress-value', progressPercent);
+}
+
+function endGame() {
+    alert(`Game Over! Your final score is: ${score}`);
+    // Optionally restart the game
+    //startGame();
 }
 
 function renderFloors(currentFloor, totalFloors = 256) {
