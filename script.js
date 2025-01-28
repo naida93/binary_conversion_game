@@ -20,9 +20,9 @@ const checkAnswerButton = document.getElementById('check-answer-button');
 const container = document.getElementById('pickers-container');
 const userInputDisplay = document.querySelector('user-input-placeholder');
 const levels = [
-    { difficulty: 'easy', totalTasks: 3, maxDecimalValue: 32, showHints: true },
-    { difficulty: 'medium', totalTasks: 3, maxDecimalValue: 63, showHints: true },
-    { difficulty: 'hard', totalTasks: 5, maxDecimalValue: 127, showHints: false }
+    { difficulty: 'easy', totalTasks: 3, maxDecimalValue: 32, showBigHints: true, showSmallHints: true },
+    { difficulty: 'medium', totalTasks: 3, maxDecimalValue: 63, showBigHints: false, showSmallHints: true },
+    { difficulty: 'hard', totalTasks: 5, maxDecimalValue: 127, showBigHints: false, showSmallHints: false }
 ];
 const levelDisplay = document.getElementById('level-icon');
 const progressBar = document.querySelector('.progress-bar');
@@ -289,22 +289,49 @@ function playNextTask() {
     }
 
     const levelSettings = levels[currentLevelIndex];
-    generateNewTask(levelSettings.maxDecimalValue, levelSettings.showHints);
+    console.log(`Starting Level ${currentLevelIndex + 1}:`, levelSettings);
+
+    generateNewTask(
+        levelSettings.maxDecimalValue,
+        levelSettings.showBigHints,
+        levelSettings.showSmallHints
+    );
 }
 
-function generateNewTask(maxValue, showHints) {
+function generateNewTask(maxValue, showBigHints, showSmallHints) {
     decimalNumber = Math.floor(Math.random() * (maxValue + 1));
     targetBinary = decimalNumber.toString(2).padStart(7, '0');
 
     console.log(`Task ${currentTaskIndex + 1} (${levels[currentLevelIndex].difficulty}): Decimal ${decimalNumber}, Binary ${targetBinary}`);
+    console.log(`Hints for this level: showBigHints=${showBigHints}, showSmallHints=${showSmallHints}`);
 
     decimalValueEl.textContent = decimalNumber;
-    if (showHints) {
-        document.getElementById('powersOf2').style.visibility = "visible";
-        displayPowersOfTwo();
+
+    const hintTable1 = document.getElementById('hint-table-1');
+    const hintTable2 = document.getElementById('hint-table-2');
+
+    if (showBigHints) {
+        hintTable1.style.visibility = "visible";
     } else {
-        document.getElementById('powersOf2').style.visibility = "hidden";
+        hintTable1.style.visibility = "hidden";
     }
+
+    if (showSmallHints) {
+        hintTable2.style.visibility = "visible";
+    } else {
+        hintTable2.style.visibility = "hidden";
+    }
+    /*if (showBigHints, showSmallHints) {
+        document.getElementById('hint-table-1').style.visibility = "visible";
+        document.getElementById('hint-table-2').style.visibility = "visible";
+        //displayPowersOfTwo();
+    } else if (!showBigHints && showSmallHints) {
+        document.getElementById('hint-table-1').style.visibility = "hidden";
+        document.getElementById('hint-table-2').style.visibility = "visible";
+    } else {
+        document.getElementById('hint-table-1').style.visibility = "hidden";
+        document.getElementById('hint-table-2').style.visibility = "hidden";
+    }*/
 
     renderFloors(decimalNumber);
     updateElevatorPosition(1.5);
@@ -438,7 +465,7 @@ function showFeedback(message, isCorrect) {
 }
 
 function displayPowersOfTwo() {
-    powersOf2Container.innerHTML = '';
+    /*powersOf2Container.innerHTML = '';
     const powers = [1, 2, 4, 8, 16, 32, 64];
     powers.reverse().forEach((power, index) => {
         const hint = document.createElement('div');
@@ -453,7 +480,7 @@ function displayPowersOfTwo() {
             powersOf2Container.style.gap = '40px';
         }
         powersOf2Container.appendChild(hint);
-    });
+    });*/
 }
 
 startGame();

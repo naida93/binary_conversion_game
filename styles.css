@@ -384,11 +384,37 @@ h1 {
 
         #powersOf2 {
             display: block flex;
-            flex-direction: row;
+            flex-direction: column;
             justify-items: space evenly;
             align-items: center;
             gap: 10px;
+            /*visibility: hidden;*/
+        }
+
+        .hint-table {
             visibility: hidden;
+            table-layout: fixed;
+            width: 100%;
+            align-items: center;
+
+            border-collapse: collapse;
+            border: none;
+        }
+
+        .hint-table td,
+        .hint-table th {
+            border: none;
+        }
+
+        #hint-table-1 {
+            font-size: 21px;
+            font-weight: bold;
+        }
+
+        #hint-table-2 {
+            font-size: 16px;
+            color: #888888;
+
         }
     }
 }
@@ -651,4 +677,3 @@ button:active {
     conic-gradient(#4caf50 calc(var(--progress-value) * 1%), #E0E0E0 0);
   animation: progress 2s 1 forwards;
 }
-
